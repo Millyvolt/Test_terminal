@@ -218,3 +218,25 @@ void SettingsDialog::updateSettings()
 
     m_currentSettings.localEchoEnabled = m_ui->localEchoCheckBox->isChecked();
 }
+
+//void SettingsDialog::fastConnectSettings()
+//{
+//    m_currentSettings.name = "COM12";
+
+//    m_currentSettings.baudRate = QSerialPort::Baud115200;
+
+//    m_currentSettings.stringBaudRate = QString::number(m_currentSettings.baudRate);
+
+//    m_currentSettings.dataBits = QSerialPort::Data8;
+
+//    m_currentSettings.parity = QSerialPort::NoParity;
+
+//    m_currentSettings.stopBits = QSerialPort::OneStop;
+
+//    m_currentSettings.flowControl = QSerialPort::NoFlowControl;
+
+////    m_currentSettings.localEchoEnabled = m_ui->localEchoCheckBox->isChecked();
+//}
+
+
+

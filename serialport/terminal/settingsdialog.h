@@ -72,6 +72,7 @@ class SettingsDialog : public QDialog
 public:
     void fillPortsInfo();
     void updateSettings();
+//    static void fastConnectSettings();
 
     struct Settings {
         QString name;

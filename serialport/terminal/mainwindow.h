@@ -91,7 +91,9 @@ private slots:
 
     void on_HexCheckBox_stateChanged(int arg1);
 
-    void on_hexInConsoleCheckBox_stateChanged(int arg1);
+    void on_hexInConsCheckBox_stateChanged(int arg1);
+
+    void on_actionFastConnect_triggered();
 
 private:
     void initActionsConnections();

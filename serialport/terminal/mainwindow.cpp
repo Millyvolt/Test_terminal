@@ -78,9 +78,15 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->actionQuit->setEnabled(true);
     m_ui->actionConfigure->setEnabled(true);
 
-    m_ui->verticalLayout_2->addWidget(m_console);
-    m_ui->verticalLayout_2->addLayout(m_ui->gridLayout);
-    m_ui->verticalLayout_2->addWidget(m_ui->plainTextEdit);
+//    m_ui->verticalLayout_2->addWidget(m_console);
+//    m_ui->verticalLayout_2->addLayout(m_ui->horizontalLayout);
+//    m_ui->horizontalLayout->addWidget(m_ui->checkBox);
+//    m_ui->verticalLayout_2->addWidget(m_ui->plainTextEdit);
+
+    m_ui->gridLayout->addWidget(m_console);
+    m_ui->gridLayout->addWidget(m_ui->hexInConsCheckBox);
+//    m_ui->gridLayout->addLayout(m_ui->horizontalLayout);
+//    m_ui->gridLayout->addWidget(m_ui->plainTextEdit);
 
     m_ui->statusBar->addWidget(m_status);
 
@@ -236,10 +242,34 @@ void MainWindow::on_HexCheckBox_stateChanged(int arg1)
         hex_checkbox = false;
 }
 
-void MainWindow::on_hexInConsoleCheckBox_stateChanged(int arg1)
+void MainWindow::on_hexInConsCheckBox_stateChanged(int arg1)
 {
     if(arg1)
         m_console->hex_in_console = true;
     else
         m_console->hex_in_console = false;
+}
+
+void MainWindow::on_actionFastConnect_triggered()
+{
+    m_serial->setPortName("COM12");
+    m_serial->setBaudRate(QSerialPort::Baud115200);
+    m_serial->setDataBits(QSerialPort::Data8);
+    m_serial->setParity(QSerialPort::NoParity);
+    m_serial->setStopBits(QSerialPort::OneStop);
+    m_serial->setFlowControl(QSerialPort::NoFlowControl);
+    if (m_serial->open(QIODevice::ReadWrite)) {
+        m_console->setEnabled(true);
+//        m_console->setLocalEchoEnabled(p.localEchoEnabled);
+        m_ui->actionConnect->setEnabled(false);
+        m_ui->actionDisconnect->setEnabled(true);
+        m_ui->actionConfigure->setEnabled(false);
+        showStatusMessage(tr("Connected to %1 : %2, %3, %4, %5, %6")
+                          .arg("COM12").arg(QString::number(QSerialPort::Baud115200)).arg("DataBits")
+                          .arg("Parity").arg("StopBits").arg("FlowControl"));
+    } else {
+        QMessageBox::critical(this, tr("Error"), m_serial->errorString());
+
+        showStatusMessage(tr("Open error"));
+    }
 }
