@@ -91,11 +91,15 @@ private slots:
 
     void on_HexCheckBox_stateChanged(int arg1);
 
+    void on_hexInConsoleCheckBox_stateChanged(int arg1);
+
 private:
     void initActionsConnections();
 
 private:
     void showStatusMessage(const QString &message);
+
+    void showSettingsDialog();
 
     Ui::MainWindow *m_ui = nullptr;
     QLabel *m_status = nullptr;
@@ -103,7 +107,7 @@ private:
     SettingsDialog *m_settings = nullptr;
     QSerialPort *m_serial = nullptr;
 
-    bool hex_checkbox = false;
+    bool hex_checkbox = true;
 };
 
 #endif // MAINWINDOW_H

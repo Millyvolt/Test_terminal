@@ -70,6 +70,9 @@ class SettingsDialog : public QDialog
     Q_OBJECT
 
 public:
+    void fillPortsInfo();
+    void updateSettings();
+
     struct Settings {
         QString name;
         qint32 baudRate;
@@ -98,8 +101,8 @@ private slots:
 
 private:
     void fillPortsParameters();
-    void fillPortsInfo();
-    void updateSettings();
+//    void fillPortsInfo();
+//    void updateSettings();
 
 private:
     Ui::SettingsDialog *m_ui = nullptr;

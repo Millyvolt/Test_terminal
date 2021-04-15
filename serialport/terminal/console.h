@@ -67,6 +67,8 @@ public:
     void putData(const QByteArray &data);
     void setLocalEchoEnabled(bool set);
 
+    bool hex_in_console = true;
+
 protected:
     void keyPressEvent(QKeyEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;

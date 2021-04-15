@@ -79,6 +79,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->actionConfigure->setEnabled(true);
 
     m_ui->verticalLayout_2->addWidget(m_console);
+    m_ui->verticalLayout_2->addLayout(m_ui->gridLayout);
     m_ui->verticalLayout_2->addWidget(m_ui->plainTextEdit);
 
     m_ui->statusBar->addWidget(m_status);
@@ -146,16 +147,19 @@ void MainWindow::closeSerialPort()
 
 void MainWindow::about()
 {
-    QMessageBox::about(this, tr("About Simple Terminal"),
-                       tr("The <b>Simple Terminal</b> example demonstrates how to "
-                          "use the Qt Serial Port module in modern GUI applications "
-                          "using Qt, with a menu bar, toolbars, and a status bar."));
+    QMessageBox::about(this, tr("About Test Terminal"),
+                       tr("The <b>Test Terminal</b> using for "
+                          "testing properties."
+                           " All rights reserved! Bch"));
 }
 
 //! [6]
 void MainWindow::writeData(const QByteArray &data)
 {
     m_serial->write(data);
+    m_console->insertPlainText("\n\n<<<<");
+    m_console->putData(data);
+    m_console->insertPlainText("\n");
 }
 //! [6]
 
@@ -182,7 +186,7 @@ void MainWindow::initActionsConnections()
     connect(m_ui->actionConnect, &QAction::triggered, this, &MainWindow::openSerialPort);
     connect(m_ui->actionDisconnect, &QAction::triggered, this, &MainWindow::closeSerialPort);
     connect(m_ui->actionQuit, &QAction::triggered, this, &MainWindow::close);
-    connect(m_ui->actionConfigure, &QAction::triggered, m_settings, &SettingsDialog::show);
+    connect(m_ui->actionConfigure, &QAction::triggered, this, &MainWindow::showSettingsDialog);//m_settings, &SettingsDialog::show);
     connect(m_ui->actionClear, &QAction::triggered, m_console, &Console::clear);
     connect(m_ui->actionAbout, &QAction::triggered, this, &MainWindow::about);
     connect(m_ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
@@ -193,10 +197,15 @@ void MainWindow::showStatusMessage(const QString &message)
     m_status->setText(message);
 }
 
-//void MainWindow::writeTextData()
-//{
-//    //m_serial->write(data);
-//}
+void MainWindow::showSettingsDialog()
+{
+    m_settings->fillPortsInfo();
+    m_settings->updateSettings();
+    m_settings->show();
+}
+
+/*****************************************************************************************
+************************ slots handlers generated from ui: ***************************************/
 
 void MainWindow::on_sendButton_clicked()
 {
@@ -208,10 +217,12 @@ void MainWindow::on_sendButton_clicked()
         if(hex_checkbox)
         {
             QByteArray arr_hex_decoded = QByteArray::fromHex(arr_tmp);
-            m_serial->write(arr_hex_decoded);
+            //m_serial->write(arr_hex_decoded);
+            writeData(arr_hex_decoded);
         }
         else
-            m_serial->write(arr_tmp);
+            writeData(arr_tmp);
+            //m_serial->write(arr_tmp);
     }
     else
         QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
@@ -225,5 +236,10 @@ void MainWindow::on_HexCheckBox_stateChanged(int arg1)
         hex_checkbox = false;
 }
 
-
-
+void MainWindow::on_hexInConsoleCheckBox_stateChanged(int arg1)
+{
+    if(arg1)
+        m_console->hex_in_console = true;
+    else
+        m_console->hex_in_console = false;
+}

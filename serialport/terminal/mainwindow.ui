@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>601</width>
-    <height>480</height>
+    <width>658</width>
+    <height>535</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,21 +19,36 @@
      <widget class="QPlainTextEdit" name="plainTextEdit"/>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2"/>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="checkBox_2">
+          <property name="text">
+           <string>CheckBoxConsole</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </item>
     <item>
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="1">
-       <widget class="QCheckBox" name="checkBox_2">
+       <widget class="QCheckBox" name="hexInConsoleCheckBox">
         <property name="text">
-         <string>CheckBox</string>
+         <string>Hex in console</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item row="0" column="0">
        <widget class="QCheckBox" name="HexCheckBox">
         <property name="text">
-         <string>Hex</string>
+         <string>Hex to send</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -88,6 +103,17 @@
       </item>
      </layout>
     </item>
+    <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string>CheckBox</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -95,7 +121,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>601</width>
+     <width>658</width>
      <height>21</height>
     </rect>
    </property>
