@@ -72,28 +72,40 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->setupUi(this);
     m_console->setEnabled(false);
 //    setCentralWidget(m_console);
+//    m_console->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
+//    m_console->setMinimumSize(638, 50);
+
+    m_ui->verticalLayout_2->addWidget(m_console);
+    m_ui->verticalLayout_2->addWidget(m_ui->hexInConsCheckBox);
 
     m_ui->actionConnect->setEnabled(true);
     m_ui->actionDisconnect->setEnabled(false);
     m_ui->actionQuit->setEnabled(true);
     m_ui->actionConfigure->setEnabled(true);
 
-//    m_ui->verticalLayout_2->addWidget(m_console);
-//    m_ui->verticalLayout_2->addLayout(m_ui->horizontalLayout);
-//    m_ui->horizontalLayout->addWidget(m_ui->checkBox);
-//    m_ui->verticalLayout_2->addWidget(m_ui->plainTextEdit);
+    m_ui->actionFastConnect->setIcon(QIcon(":/images/connect_icon.png"));
 
-    m_ui->gridLayout->addWidget(m_console);
-    m_ui->gridLayout->addWidget(m_ui->hexInConsCheckBox);
-//    m_ui->gridLayout->addLayout(m_ui->horizontalLayout);
-//    m_ui->gridLayout->addWidget(m_ui->plainTextEdit);
+//    m_ui->gridLayout->addWidget(m_console);
+
+//    m_ui->gridLayout->addWidget(m_ui->hexInConsCheckBox);
 
     m_ui->statusBar->addWidget(m_status);
 
-    initActionsConnections();
+    m_ui->plainTextEdit_2->setPlaceholderText("Data field 2");
+    m_ui->plainTextEdit->setPlainText("55AA496AD500000000000000000000000000000000000000000000000000"
+                                      "000000703A11FA4000000000F0390F00000000000000000070D31467ABA5"
+                                      "001BF8FFFFFF0700580055580A00D84BC30D");
 
-    // my connections
-//    connect(m_ui->gridLayout_2->pushButton_4, &QPushButton::clicked, this, &MainWindow::writeTextData);
+
+    //set sizes of text fields
+    m_console->setMinimumSize(650, 300);
+    m_console->setMaximumSize(10000, 1000);
+    m_ui->plainTextEdit_2->setMinimumSize(650, 40);
+    m_ui->plainTextEdit_2->setMaximumSize(10000, 100);
+    m_ui->plainTextEdit->setMinimumSize(650, 40);
+    m_ui->plainTextEdit->setMaximumSize(10000, 100);
+
+    initActionsConnections();
 
     connect(m_serial, &QSerialPort::errorOccurred, this, &MainWindow::handleError);
 
@@ -223,12 +235,10 @@ void MainWindow::on_sendButton_clicked()
         if(hex_checkbox)
         {
             QByteArray arr_hex_decoded = QByteArray::fromHex(arr_tmp);
-            //m_serial->write(arr_hex_decoded);
             writeData(arr_hex_decoded);
         }
         else
             writeData(arr_tmp);
-            //m_serial->write(arr_tmp);
     }
     else
         QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
@@ -260,16 +270,35 @@ void MainWindow::on_actionFastConnect_triggered()
     m_serial->setFlowControl(QSerialPort::NoFlowControl);
     if (m_serial->open(QIODevice::ReadWrite)) {
         m_console->setEnabled(true);
-//        m_console->setLocalEchoEnabled(p.localEchoEnabled);
+        m_console->setLocalEchoEnabled(true);
         m_ui->actionConnect->setEnabled(false);
         m_ui->actionDisconnect->setEnabled(true);
         m_ui->actionConfigure->setEnabled(false);
         showStatusMessage(tr("Connected to %1 : %2, %3, %4, %5, %6")
-                          .arg("COM12").arg(QString::number(QSerialPort::Baud115200)).arg("DataBits")
-                          .arg("Parity").arg("StopBits").arg("FlowControl"));
+                          .arg("COM12").arg(QString::number(m_serial->baudRate())).arg(QString::number(m_serial->dataBits()))
+                          .arg(QString::number(m_serial->parity())).arg(QString::number(m_serial->stopBits())).arg(QString::number(m_serial->flowControl())));
     } else {
         QMessageBox::critical(this, tr("Error"), m_serial->errorString());
 
         showStatusMessage(tr("Open error"));
     }
+}
+
+void MainWindow::on_sendButton2_clicked()
+{
+    if (m_serial->isOpen())
+    {
+        QString string_tmp =  m_ui->plainTextEdit_2->toPlainText();
+        QByteArray arr_tmp = string_tmp.toLocal8Bit();
+
+        if(hex_checkbox2)
+        {
+            QByteArray arr_hex_decoded = QByteArray::fromHex(arr_tmp);
+            writeData(arr_hex_decoded);
+        }
+        else
+            writeData(arr_tmp);
+    }
+    else
+        QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
 }

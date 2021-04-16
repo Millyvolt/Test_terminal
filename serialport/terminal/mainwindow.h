@@ -95,6 +95,8 @@ private slots:
 
     void on_actionFastConnect_triggered();
 
+    void on_sendButton2_clicked();
+
 private:
     void initActionsConnections();
 
@@ -110,6 +112,7 @@ private:
     QSerialPort *m_serial = nullptr;
 
     bool hex_checkbox = true;
+    bool hex_checkbox2 = true;
 };
 
 #endif // MAINWINDOW_H
