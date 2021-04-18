@@ -65,7 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_console(new Console),
     m_settings(new SettingsDialog),
 //! [1]
-    m_serial(new QSerialPort(this))
+    m_serial(new QSerialPort(this)),
+    repeat_timer(new QTimer(this))
 //! [1]
 {
 //! [0]
@@ -96,7 +97,6 @@ MainWindow::MainWindow(QWidget *parent) :
                                       "000000703A11FA4000000000F0390F00000000000000000070D31467ABA5"
                                       "001BF8FFFFFF0700580055580A00D84BC30D");
 
-
     //set sizes of text fields
     m_console->setMinimumSize(650, 300);
     m_console->setMaximumSize(10000, 1000);
@@ -105,7 +105,14 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->plainTextEdit->setMinimumSize(650, 40);
     m_ui->plainTextEdit->setMaximumSize(10000, 100);
 
+//    QPalette palette = m_ui->label->palette();
+//    palette.setColor(m_ui->label->backgroundRole(), Qt::yellow);
+//    palette.setColor(m_ui->label->foregroundRole(), Qt::yellow);
+//    m_ui->label->setPalette(palette);
+
     initActionsConnections();
+
+    connect(repeat_timer, &QTimer::timeout, this, &MainWindow::Send_data);
 
     connect(m_serial, &QSerialPort::errorOccurred, this, &MainWindow::handleError);
 
@@ -222,10 +229,7 @@ void MainWindow::showSettingsDialog()
     m_settings->show();
 }
 
-/*****************************************************************************************
-************************ slots handlers generated from ui: ***************************************/
-
-void MainWindow::on_sendButton_clicked()
+void MainWindow::Send_data()
 {
     if (m_serial->isOpen())
     {
@@ -241,7 +245,71 @@ void MainWindow::on_sendButton_clicked()
             writeData(arr_tmp);
     }
     else
+    {
         QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
+        if(repeat_timer_on)
+        {
+            repeat_timer->stop();
+            repeat_timer_on = false;
+            m_ui->repeat_label->setText("Repeat on");
+        }
+    }
+}
+
+void MainWindow::Label_color(QLabel *label, Qt::GlobalColor color)
+{
+    QPalette palette = label->palette();
+    palette.setColor(label->backgroundRole(), color);
+    palette.setColor(label->foregroundRole(), color);
+    label->setPalette(palette);
+
+}
+
+
+
+/*************************************************************************************************
+************************ slots handlers generated from ui: ***************************************/
+
+
+
+void MainWindow::on_sendButton_clicked()
+{
+    if( (repeat_checkbox == true) && (repeat_timer_on == false) )
+    {
+//        if(repeat_timer_on)
+//        {
+//            repeat_timer->stop();
+//            repeat_timer_on = false;
+//            m_ui->repeat_label->setText("Repeat on");
+//            Label_color(m_ui->repeat_label, Qt::green);
+//        }
+//        else
+//        {
+        Send_data();
+        repeat_timer->start(m_ui->spinBox->value());
+        repeat_timer_on = true;
+        m_ui->repeat_label->setText("Sending");
+        Label_color(m_ui->repeat_label, Qt::red);
+//        }
+    }
+    else
+        Send_data();
+
+    if(repeat_timer_on)
+    {
+        repeat_timer->stop();
+        repeat_timer_on = false;
+        if(repeat_checkbox)
+        {
+            m_ui->repeat_label->setText("Repeat on");
+            Label_color(m_ui->repeat_label, Qt::green);
+        }
+        else
+        {
+            m_ui->repeat_label->setText("Repeat off");
+            Label_color(m_ui->repeat_label, Qt::black);
+        }
+    }
 }
 
 void MainWindow::on_HexCheckBox_stateChanged(int arg1)
@@ -301,4 +369,26 @@ void MainWindow::on_sendButton2_clicked()
     }
     else
         QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
+}
+
+void MainWindow::on_repeatCheckBox_stateChanged(int arg1)
+{
+    if(arg1)
+    {
+        repeat_checkbox = true;
+        m_ui->repeat_label->setText("Repeat on");
+        Label_color(m_ui->repeat_label, Qt::green);
+    }
+    else
+    {
+        repeat_checkbox = false;
+        m_ui->repeat_label->setText("Repeat off");
+        Label_color(m_ui->repeat_label, Qt::black);
+    }
+
+    if(repeat_timer_on)
+    {
+        m_ui->repeat_label->setText("Sending");
+        Label_color(m_ui->repeat_label, Qt::red);
+    }
 }

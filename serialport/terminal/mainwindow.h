@@ -54,6 +54,7 @@
 
 #include <QMainWindow>
 #include <QSerialPort>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 
@@ -85,6 +86,8 @@ private slots:
 
 //    void writeTextData();
 
+//    void Repeat_timeout();
+
     void handleError(QSerialPort::SerialPortError error);
 
     void on_sendButton_clicked();
@@ -97,6 +100,8 @@ private slots:
 
     void on_sendButton2_clicked();
 
+    void on_repeatCheckBox_stateChanged(int arg1);
+
 private:
     void initActionsConnections();
 
@@ -104,6 +109,9 @@ private:
     void showStatusMessage(const QString &message);
 
     void showSettingsDialog();
+
+    void Send_data();
+    void Label_color(QLabel *label, Qt::GlobalColor color);
 
     Ui::MainWindow *m_ui = nullptr;
     QLabel *m_status = nullptr;
@@ -113,6 +121,10 @@ private:
 
     bool hex_checkbox = true;
     bool hex_checkbox2 = true;
+    bool repeat_checkbox = false;
+    bool repeat_timer_on = false;
+
+    QTimer *repeat_timer = nullptr;
 };
 
 #endif // MAINWINDOW_H

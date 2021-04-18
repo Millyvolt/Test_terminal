@@ -68,19 +68,15 @@ void Console::putData(const QByteArray &data)
     if(!hex_in_console)
     {
         insertPlainText(data);
-
-        QScrollBar *bar = verticalScrollBar();
-        bar->setValue(bar->maximum());
     }
     else
     {
         insertPlainText("\n");
-
         insertPlainText(data.toHex(' '));
-
-        QScrollBar *bar = verticalScrollBar();
-        bar->setValue(bar->maximum());
     }
+
+    QScrollBar *bar = verticalScrollBar();
+    bar->setValue(bar->maximum());
 }
 
 void Console::setLocalEchoEnabled(bool set)
