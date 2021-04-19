@@ -94,13 +94,15 @@ private slots:
 
     void on_HexCheckBox_stateChanged(int arg1);
 
-    void on_hexInConsCheckBox_stateChanged(int arg1);
+    void on_hexInConsoleCheckBox_stateChanged(int arg1);
 
     void on_actionFastConnect_triggered();
 
     void on_sendButton2_clicked();
 
     void on_repeatCheckBox_stateChanged(int arg1);
+
+    void on_timeCheckBox_stateChanged(int arg1);
 
 private:
     void initActionsConnections();
@@ -123,6 +125,7 @@ private:
     bool hex_checkbox2 = true;
     bool repeat_checkbox = false;
     bool repeat_timer_on = false;
+    bool time_checkbox = false;
 
     QTimer *repeat_timer = nullptr;
 };

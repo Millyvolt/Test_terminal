@@ -19,12 +19,19 @@
      <layout class="QVBoxLayout" name="verticalLayout_2"/>
     </item>
     <item>
-     <widget class="QCheckBox" name="hexInConsCheckBox">
+     <widget class="QCheckBox" name="hexInConsoleCheckBox">
       <property name="text">
-       <string>Hex in console</string>
+       <string>Hex</string>
       </property>
       <property name="checked">
        <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="timeCheckBox">
+      <property name="text">
+       <string>Time</string>
       </property>
      </widget>
     </item>
@@ -74,6 +81,9 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::TextEditorInteraction</set>
         </property>
        </widget>
       </item>
@@ -151,7 +161,7 @@
      <x>0</x>
      <y>0</y>
      <width>658</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCalls">

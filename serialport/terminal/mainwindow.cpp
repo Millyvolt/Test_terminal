@@ -56,6 +56,7 @@
 
 #include <QLabel>
 #include <QMessageBox>
+#include <QDateTime>
 
 //! [0]
 MainWindow::MainWindow(QWidget *parent) :
@@ -77,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    m_console->setMinimumSize(638, 50);
 
     m_ui->verticalLayout_2->addWidget(m_console);
-    m_ui->verticalLayout_2->addWidget(m_ui->hexInConsCheckBox);
+    m_ui->verticalLayout_2->addWidget(m_ui->hexInConsoleCheckBox);
 
     m_ui->actionConnect->setEnabled(true);
     m_ui->actionDisconnect->setEnabled(false);
@@ -105,10 +106,11 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->plainTextEdit->setMinimumSize(650, 40);
     m_ui->plainTextEdit->setMaximumSize(10000, 100);
 
-//    QPalette palette = m_ui->label->palette();
-//    palette.setColor(m_ui->label->backgroundRole(), Qt::yellow);
-//    palette.setColor(m_ui->label->foregroundRole(), Qt::yellow);
-//    m_ui->label->setPalette(palette);
+
+
+//    QTime time = QTime::currentTime();
+//    m_ui->plainTextEdit_2->setPlainText(time.toString());
+
 
     initActionsConnections();
 
@@ -181,10 +183,15 @@ void MainWindow::about()
 //! [6]
 void MainWindow::writeData(const QByteArray &data)
 {
-    m_serial->write(data);
-    m_console->insertPlainText("\n\n<<<<");
-    m_console->putData(data);
-    m_console->insertPlainText("\n");
+    if (m_serial->isOpen())
+    {
+        m_serial->write(data);
+        m_console->insertPlainText("\n\n<<<<");
+        m_console->putData(data);
+        m_console->insertPlainText("\n");
+    }
+    else
+        QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
 }
 //! [6]
 
@@ -262,7 +269,6 @@ void MainWindow::Label_color(QLabel *label, Qt::GlobalColor color)
     palette.setColor(label->backgroundRole(), color);
     palette.setColor(label->foregroundRole(), color);
     label->setPalette(palette);
-
 }
 
 
@@ -292,10 +298,7 @@ void MainWindow::on_sendButton_clicked()
         Label_color(m_ui->repeat_label, Qt::red);
 //        }
     }
-    else
-        Send_data();
-
-    if(repeat_timer_on)
+    else if(repeat_timer_on)
     {
         repeat_timer->stop();
         repeat_timer_on = false;
@@ -310,6 +313,8 @@ void MainWindow::on_sendButton_clicked()
             Label_color(m_ui->repeat_label, Qt::black);
         }
     }
+    else
+        Send_data();
 }
 
 void MainWindow::on_HexCheckBox_stateChanged(int arg1)
@@ -320,7 +325,7 @@ void MainWindow::on_HexCheckBox_stateChanged(int arg1)
         hex_checkbox = false;
 }
 
-void MainWindow::on_hexInConsCheckBox_stateChanged(int arg1)
+void MainWindow::on_hexInConsoleCheckBox_stateChanged(int arg1)
 {
     if(arg1)
         m_console->hex_in_console = true;
@@ -391,4 +396,12 @@ void MainWindow::on_repeatCheckBox_stateChanged(int arg1)
         m_ui->repeat_label->setText("Sending");
         Label_color(m_ui->repeat_label, Qt::red);
     }
+}
+
+void MainWindow::on_timeCheckBox_stateChanged(int arg1)
+{
+    if(arg1)
+        time_checkbox = true;
+    else
+        time_checkbox = false;
 }

@@ -52,6 +52,7 @@
 #include "console.h"
 
 #include <QScrollBar>
+#include <QTime>
 
 Console::Console(QWidget *parent) :
     QPlainTextEdit(parent)
@@ -61,19 +62,20 @@ Console::Console(QWidget *parent) :
     p.setColor(QPalette::Base, Qt::black);
     p.setColor(QPalette::Text, Qt::green);
     setPalette(p);
+    setTextInteractionFlags(Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse);
 }
 
 void Console::putData(const QByteArray &data)
 {
+//    if(m_ui->timeCh)
+    QTime time = QTime::currentTime();
+
+    insertPlainText("\n" + time.toString());
+
     if(!hex_in_console)
-    {
         insertPlainText(data);
-    }
     else
-    {
-        insertPlainText("\n");
-        insertPlainText(data.toHex(' '));
-    }
+        insertPlainText("\n" + data.toHex(' '));
 
     QScrollBar *bar = verticalScrollBar();
     bar->setValue(bar->maximum());
