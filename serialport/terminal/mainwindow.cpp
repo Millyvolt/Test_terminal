@@ -57,28 +57,32 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QDateTime>
+#include <QScrollBar>
 
-//! [0]
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow),
     m_status(new QLabel),
     m_console(new Console),
     m_settings(new SettingsDialog),
-//! [1]
     m_serial(new QSerialPort(this)),
     repeat_timer(new QTimer(this))
-//! [1]
 {
-//! [0]
     m_ui->setupUi(this);
-    m_console->setEnabled(false);
-//    setCentralWidget(m_console);
-//    m_console->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
-//    m_console->setMinimumSize(638, 50);
 
-    m_ui->verticalLayout_2->addWidget(m_console);
-    m_ui->verticalLayout_2->addWidget(m_ui->hexInConsoleCheckBox);
+//    m_console->setEnabled(false);
+//    setCentralWidget(m_console);
+//    m_ui->verticalLayout_2->addWidget(m_console);
+
+    //my console setting up
+    QPalette *text3_pal = new QPalette;
+    text3_pal->setColor(QPalette::Base, Qt::black);
+    text3_pal->setColor(QPalette::Text, Qt::green);
+    m_ui->plainTextEdit_3->setPalette(*text3_pal);
+
+//    m_ui->gridLayout->addWidget(m_ui->plainTextEdit_3);
+//    m_ui->gridLayout->addWidget(m_ui->hexInConsoleCheckBox);
 
     m_ui->actionConnect->setEnabled(true);
     m_ui->actionDisconnect->setEnabled(false);
@@ -86,10 +90,6 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->actionConfigure->setEnabled(true);
 
     m_ui->actionFastConnect->setIcon(QIcon(":/images/connect_icon.png"));
-
-//    m_ui->gridLayout->addWidget(m_console);
-
-//    m_ui->gridLayout->addWidget(m_ui->hexInConsCheckBox);
 
     m_ui->statusBar->addWidget(m_status);
 
@@ -99,17 +99,14 @@ MainWindow::MainWindow(QWidget *parent) :
                                       "001BF8FFFFFF0700580055580A00D84BC30D");
 
     //set sizes of text fields
-    m_console->setMinimumSize(650, 300);
+    m_console->setMinimumSize(650, 200);
     m_console->setMaximumSize(10000, 1000);
+    m_ui->plainTextEdit_3->setMinimumSize(650, 200);
+    m_ui->plainTextEdit_3->setMaximumSize(10000, 1000);
     m_ui->plainTextEdit_2->setMinimumSize(650, 40);
     m_ui->plainTextEdit_2->setMaximumSize(10000, 100);
     m_ui->plainTextEdit->setMinimumSize(650, 40);
     m_ui->plainTextEdit->setMaximumSize(10000, 100);
-
-
-
-//    QTime time = QTime::currentTime();
-//    m_ui->plainTextEdit_2->setPlainText(time.toString());
 
 
     initActionsConnections();
@@ -117,14 +114,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(repeat_timer, &QTimer::timeout, this, &MainWindow::Send_data);
 
     connect(m_serial, &QSerialPort::errorOccurred, this, &MainWindow::handleError);
-
-//! [2]
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
-//! [2]
     connect(m_console, &Console::getData, this, &MainWindow::writeData);
-//! [3]
 }
-//! [3]
 
 MainWindow::~MainWindow()
 {
@@ -132,7 +124,6 @@ MainWindow::~MainWindow()
     delete m_ui;
 }
 
-//! [4]
 void MainWindow::openSerialPort()
 {
     const SettingsDialog::Settings p = m_settings->settings();
@@ -157,9 +148,7 @@ void MainWindow::openSerialPort()
         showStatusMessage(tr("Open error"));
     }
 }
-//! [4]
 
-//! [5]
 void MainWindow::closeSerialPort()
 {
     if (m_serial->isOpen())
@@ -170,7 +159,6 @@ void MainWindow::closeSerialPort()
     m_ui->actionConfigure->setEnabled(true);
     showStatusMessage(tr("Disconnected"));
 }
-//! [5]
 
 void MainWindow::about()
 {
@@ -180,7 +168,6 @@ void MainWindow::about()
                            " All rights reserved! Bch"));
 }
 
-//! [6]
 void MainWindow::writeData(const QByteArray &data)
 {
     if (m_serial->isOpen())
@@ -193,17 +180,28 @@ void MainWindow::writeData(const QByteArray &data)
     else
         QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
 }
-//! [6]
 
-//! [7]
 void MainWindow::readData()
 {
-    const QByteArray data = m_serial->readAll();
-    m_console->putData(data);
-}
-//! [7]
+    m_ui->plainTextEdit_3->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 
-//! [8]
+    const QByteArray data = m_serial->readAll();
+
+//    m_console->putData(data);
+
+    QTime time = QTime::currentTime();
+
+    m_ui->plainTextEdit_3->insertPlainText("\n" + time.toString());
+
+    if(hex_console)
+        m_ui->plainTextEdit_3->insertPlainText("\n" + data.toHex(' '));
+    else
+        m_ui->plainTextEdit_3->insertPlainText(data);
+
+    QScrollBar *bar = m_ui->plainTextEdit_3->verticalScrollBar();
+    bar->setValue(bar->maximum());
+}
+
 void MainWindow::handleError(QSerialPort::SerialPortError error)
 {
     if (error == QSerialPort::ResourceError) {
@@ -211,7 +209,6 @@ void MainWindow::handleError(QSerialPort::SerialPortError error)
         closeSerialPort();
     }
 }
-//! [8]
 
 void MainWindow::initActionsConnections()
 {
@@ -219,7 +216,8 @@ void MainWindow::initActionsConnections()
     connect(m_ui->actionDisconnect, &QAction::triggered, this, &MainWindow::closeSerialPort);
     connect(m_ui->actionQuit, &QAction::triggered, this, &MainWindow::close);
     connect(m_ui->actionConfigure, &QAction::triggered, this, &MainWindow::showSettingsDialog);//m_settings, &SettingsDialog::show);
-    connect(m_ui->actionClear, &QAction::triggered, m_console, &Console::clear);
+//    connect(m_ui->actionClear, &QAction::triggered, m_console, &Console::clear);
+    connect(m_ui->actionClear, &QAction::triggered, m_ui->plainTextEdit_3, &QPlainTextEdit::clear);
     connect(m_ui->actionAbout, &QAction::triggered, this, &MainWindow::about);
     connect(m_ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
 }
@@ -282,21 +280,11 @@ void MainWindow::on_sendButton_clicked()
 {
     if( (repeat_checkbox == true) && (repeat_timer_on == false) )
     {
-//        if(repeat_timer_on)
-//        {
-//            repeat_timer->stop();
-//            repeat_timer_on = false;
-//            m_ui->repeat_label->setText("Repeat on");
-//            Label_color(m_ui->repeat_label, Qt::green);
-//        }
-//        else
-//        {
         Send_data();
         repeat_timer->start(m_ui->spinBox->value());
         repeat_timer_on = true;
         m_ui->repeat_label->setText("Sending");
         Label_color(m_ui->repeat_label, Qt::red);
-//        }
     }
     else if(repeat_timer_on)
     {
@@ -328,9 +316,11 @@ void MainWindow::on_HexCheckBox_stateChanged(int arg1)
 void MainWindow::on_hexInConsoleCheckBox_stateChanged(int arg1)
 {
     if(arg1)
-        m_console->hex_in_console = true;
+//        m_console->hex_in_console = true;
+        hex_console = true;
     else
-        m_console->hex_in_console = false;
+//        m_console->hex_in_console = false;
+        hex_console = false;
 }
 
 void MainWindow::on_actionFastConnect_triggered()

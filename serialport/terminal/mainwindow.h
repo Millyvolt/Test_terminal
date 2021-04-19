@@ -126,6 +126,7 @@ private:
     bool repeat_checkbox = false;
     bool repeat_timer_on = false;
     bool time_checkbox = false;
+    bool hex_console = true;
 
     QTimer *repeat_timer = nullptr;
 };
