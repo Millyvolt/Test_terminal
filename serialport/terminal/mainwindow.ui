@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>658</width>
-    <height>415</height>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,17 +54,20 @@
     </item>
     <item>
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="1" column="0">
-       <widget class="QPushButton" name="sendButton">
-        <property name="text">
-         <string>Send</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="4">
        <widget class="QLabel" name="label">
         <property name="text">
          <string>ms</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="HexCheckBox">
+        <property name="text">
+         <string>Hex</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -81,6 +84,26 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="sendButton">
+        <property name="text">
+         <string>Send</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="QLabel" name="repeat_label">
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <property name="text">
+         <string>Repeat off</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="2">
        <widget class="QCheckBox" name="repeatCheckBox">
         <property name="text">
@@ -88,24 +111,10 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="5">
-       <widget class="QLabel" name="repeat_label">
-        <property name="text">
-         <string>Repeat off</string>
-        </property>
-       </widget>
+      <item row="0" column="0" colspan="8">
+       <widget class="QPlainTextEdit" name="plainTextEdit"/>
       </item>
-      <item row="1" column="1">
-       <widget class="QCheckBox" name="HexCheckBox">
-        <property name="text">
-         <string>Hex</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="6">
+      <item row="1" column="7">
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -118,8 +127,21 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="0" colspan="7">
-       <widget class="QPlainTextEdit" name="plainTextEdit"/>
+      <item row="1" column="5">
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>10</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </item>

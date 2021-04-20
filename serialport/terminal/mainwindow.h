@@ -113,7 +113,7 @@ private:
     void showSettingsDialog();
 
     void Send_data();
-    void Label_color(QLabel *label, Qt::GlobalColor color);
+    void Set_label_color(QLabel *label, Qt::GlobalColor color);
 
     Ui::MainWindow *m_ui = nullptr;
     QLabel *m_status = nullptr;
