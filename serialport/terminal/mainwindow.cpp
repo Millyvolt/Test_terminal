@@ -76,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    m_ui->verticalLayout_2->addWidget(m_console);
 
     //my console setting up
+
     QPalette *text3_pal = new QPalette;
     text3_pal->setColor(QPalette::Base, Qt::black);
     text3_pal->setColor(QPalette::Text, Qt::green);

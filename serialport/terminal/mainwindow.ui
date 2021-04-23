@@ -7,8 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>658</width>
-    <height>418</height>
+    <height>502</height>
    </rect>
+  </property>
+  <property name="acceptDrops">
+   <bool>false</bool>
   </property>
   <property name="windowTitle">
    <string>Test terminal</string>
@@ -147,6 +150,20 @@
     </item>
     <item>
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="0">
+       <widget class="QPushButton" name="sendButton2">
+        <property name="text">
+         <string>Send</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QCheckBox" name="checkBox_2">
+        <property name="text">
+         <string>Repeat</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
        <widget class="QCheckBox" name="checkBox">
         <property name="text">
@@ -157,14 +174,21 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="sendButton2">
+      <item row="1" column="4">
+       <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Send</string>
+         <string>ms</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
+      <item row="1" column="3">
+       <widget class="QSpinBox" name="spinBox_2">
+        <property name="maximum">
+         <number>9999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="7">
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -177,8 +201,37 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="0" colspan="3">
+      <item row="1" column="6">
+       <widget class="QLabel" name="label_3">
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <property name="text">
+         <string>Repeat off</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="8">
        <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
+      </item>
+      <item row="1" column="5">
+       <spacer name="horizontalSpacer_5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>10</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </item>
