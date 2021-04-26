@@ -19,7 +19,7 @@ CXXFLAGS      = -fno-keep-inline-dllexport -g -Wall -Wextra -Wextra -fexceptions
 INCPATH       = -I..\terminal -I. -I..\..\..\..\Qt\5.15.2\mingw81_32\include -I..\..\..\..\Qt\5.15.2\mingw81_32\include\QtWidgets -I..\..\..\..\Qt\5.15.2\mingw81_32\include\QtGui -I..\..\..\..\Qt\5.15.2\mingw81_32\include\QtANGLE -I..\..\..\..\Qt\5.15.2\mingw81_32\include\QtSerialPort -I..\..\..\..\Qt\5.15.2\mingw81_32\include\QtCore -Idebug -I. -I..\..\..\..\Qt\5.15.2\mingw81_32\mkspecs\win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        C:\Qt\5.15.2\mingw81_32\lib\libQt5Widgets.a C:\Qt\5.15.2\mingw81_32\lib\libQt5Gui.a C:\Qt\5.15.2\mingw81_32\lib\libQt5SerialPort.a C:\Qt\5.15.2\mingw81_32\lib\libQt5Core.a  -lmingw32 C:\Qt\5.15.2\mingw81_32\lib\libqtmain.a -LC:\openssl\lib -LC:\Utils\my_sql\mysql-5.7.25-win32\lib -LC:\Utils\postgresql\pgsql\lib -lshell32 
+LIBS        =        C:\Qt\5.15.2\mingw81_32\lib\libQt5Widgets.a C:\Qt\5.15.2\mingw81_32\lib\libQt5Gui.a C:\Qt\5.15.2\mingw81_32\lib\libQt5SerialPort.a C:\Qt\5.15.2\mingw81_32\lib\libQt5Core.a debug\terminal_resource_res.o  -lmingw32 C:\Qt\5.15.2\mingw81_32\lib\libqtmain.a -LC:\openssl\lib -LC:\Utils\my_sql\mysql-5.7.25-win32\lib -LC:\Utils\postgresql\pgsql\lib -lshell32 
 QMAKE         = C:\Qt\5.15.2\mingw81_32\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -40,7 +40,7 @@ IDC           = idc
 IDL           = midl
 ZIP           = zip -r -9
 DEF_FILE      = 
-RES_FILE      = 
+RES_FILE      = debug\terminal_resource_res.o
 SED           = $(QMAKE) -install sed
 MOVE          = move
 
@@ -82,8 +82,11 @@ DESTDIR_TARGET = debug\terminal.exe
 first: all
 all: Makefile.Debug  debug/terminal.exe
 
-debug/terminal.exe: C:/Qt/5.15.2/mingw81_32/lib/libQt5Widgets.a C:/Qt/5.15.2/mingw81_32/lib/libQt5Gui.a C:/Qt/5.15.2/mingw81_32/lib/libQt5SerialPort.a C:/Qt/5.15.2/mingw81_32/lib/libQt5Core.a C:/Qt/5.15.2/mingw81_32/lib/libqtmain.a ui_mainwindow.h ui_settingsdialog.h $(OBJECTS) 
+debug/terminal.exe: C:/Qt/5.15.2/mingw81_32/lib/libQt5Widgets.a C:/Qt/5.15.2/mingw81_32/lib/libQt5Gui.a C:/Qt/5.15.2/mingw81_32/lib/libQt5SerialPort.a C:/Qt/5.15.2/mingw81_32/lib/libQt5Core.a C:/Qt/5.15.2/mingw81_32/lib/libqtmain.a ui_mainwindow.h ui_settingsdialog.h $(OBJECTS) debug/terminal_resource_res.o
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS)  $(LIBS)
+
+debug/terminal_resource_res.o: terminal_resource.rc
+	windres -i terminal_resource.rc -o debug\terminal_resource_res.o --include-dir=. $(DEFINES)
 
 qmake: FORCE
 	@$(QMAKE) -o Makefile.Debug ..\terminal\terminal.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -95,6 +98,7 @@ dist:
 
 clean: compiler_clean 
 	-$(DEL_FILE) debug\main.o debug\mainwindow.o debug\settingsdialog.o debug\console.o debug\qrc_terminal.o debug\moc_mainwindow.o debug\moc_settingsdialog.o debug\moc_console.o
+	-$(DEL_FILE) debug\terminal_resource_res.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -116,7 +120,9 @@ compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_terminal.cpp
 debug/qrc_terminal.cpp: ../terminal/terminal.qrc \
 		../../../../Qt/5.15.2/mingw81_32/bin/rcc.exe \
+		../terminal/icon_cmd.ico \
 		../terminal/images/application-exit.png \
+		../terminal/images/lightning_icon.png \
 		../terminal/images/disconnect.png \
 		../terminal/images/clear.png \
 		../terminal/images/connect_icon.png \
@@ -243,6 +249,9 @@ debug/moc_mainwindow.cpp: ../terminal/mainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSerialPort/QSerialPort \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSerialPort/qserialport.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSerialPort/qserialportglobal.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
 		debug/moc_predefs.h \
 		../../../../Qt/5.15.2/mingw81_32/bin/moc.exe
 	C:\Qt\5.15.2\mingw81_32\bin\moc.exe $(DEFINES) --include C:/git_repos/Test_terminal/serialport/build-terminal-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/debug/moc_predefs.h -IC:/Qt/5.15.2/mingw81_32/mkspecs/win32-g++ -IC:/git_repos/Test_terminal/serialport/terminal -IC:/Qt/5.15.2/mingw81_32/include -IC:/Qt/5.15.2/mingw81_32/include/QtWidgets -IC:/Qt/5.15.2/mingw81_32/include/QtGui -IC:/Qt/5.15.2/mingw81_32/include/QtANGLE -IC:/Qt/5.15.2/mingw81_32/include/QtSerialPort -IC:/Qt/5.15.2/mingw81_32/include/QtCore -I. -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++ -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/i686-w64-mingw32 -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/backward -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include-fixed -IC:/Qt/Tools/mingw810_32/i686-w64-mingw32/include ..\terminal\mainwindow.h -o debug\moc_mainwindow.cpp
@@ -618,6 +627,9 @@ debug/main.o: ../terminal/main.cpp ../terminal/mainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSerialPort/QSerialPort \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSerialPort/qserialport.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSerialPort/qserialportglobal.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qcoreapplication.h \
@@ -737,6 +749,9 @@ debug/mainwindow.o: ../terminal/mainwindow.cpp ../terminal/mainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSerialPort/QSerialPort \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSerialPort/qserialport.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSerialPort/qserialportglobal.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
 		ui_mainwindow.h \
 		../terminal/console.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QPlainTextEdit \
@@ -760,7 +775,12 @@ debug/mainwindow.o: ../terminal/mainwindow.cpp ../terminal/mainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QLabel \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlabel.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QMessageBox \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qmessagebox.h
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qmessagebox.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QScrollBar \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qscrollbar.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractslider.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\terminal\mainwindow.cpp
 
 debug/settingsdialog.o: ../terminal/settingsdialog.cpp ../terminal/settingsdialog.h \
@@ -1006,7 +1026,9 @@ debug/console.o: ../terminal/console.cpp ../terminal/console.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qfontdatabase.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QScrollBar \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qscrollbar.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractslider.h
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractslider.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\console.o ..\terminal\console.cpp
 
 debug/qrc_terminal.o: debug/qrc_terminal.cpp 

@@ -24,3 +24,5 @@ RESOURCES += \
 
 target.path = $$[QT_INSTALL_EXAMPLES]/serialport/terminal
 INSTALLS += target
+
+RC_ICONS = icon_cmd.ico

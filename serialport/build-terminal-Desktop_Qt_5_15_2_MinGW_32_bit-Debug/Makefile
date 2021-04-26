@@ -33,7 +33,7 @@ IDC           = idc
 IDL           = midl
 ZIP           = zip -r -9
 DEF_FILE      = 
-RES_FILE      = 
+RES_FILE      = terminal_resource_res.o
 SED           = $(QMAKE) -install sed
 MOVE          = move
 SUBTARGETS    =  \
@@ -222,6 +222,7 @@ Makefile: ../terminal/terminal.pro ../../../../Qt/5.15.2/mingw81_32/mkspecs/win3
 		../../../../Qt/5.15.2/mingw81_32/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.15.2/mingw81_32/mkspecs/win32-g++/qmake.conf \
 		../../../../Qt/5.15.2/mingw81_32/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.15.2/mingw81_32/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.15.2/mingw81_32/mkspecs/features/toolchain.prf \
 		../../../../Qt/5.15.2/mingw81_32/mkspecs/features/default_pre.prf \
@@ -251,7 +252,6 @@ Makefile: ../terminal/terminal.pro ../../../../Qt/5.15.2/mingw81_32/mkspecs/win3
 		../../../../Qt/5.15.2/mingw81_32/lib/Qt5SerialPort.prl \
 		../../../../Qt/5.15.2/mingw81_32/lib/Qt5Core.prl \
 		../../../../Qt/5.15.2/mingw81_32/lib/qtmain.prl \
-		.qmake.stash \
 		../../../../Qt/5.15.2/mingw81_32/mkspecs/features/build_pass.prf \
 		../terminal/terminal.qrc
 	$(QMAKE) -o Makefile ..\terminal\terminal.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -407,6 +407,7 @@ Makefile: ../terminal/terminal.pro ../../../../Qt/5.15.2/mingw81_32/mkspecs/win3
 ../../../../Qt/5.15.2/mingw81_32/mkspecs/features/qt_config.prf:
 ../../../../Qt/5.15.2/mingw81_32/mkspecs/win32-g++/qmake.conf:
 ../../../../Qt/5.15.2/mingw81_32/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/5.15.2/mingw81_32/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/5.15.2/mingw81_32/mkspecs/features/toolchain.prf:
 ../../../../Qt/5.15.2/mingw81_32/mkspecs/features/default_pre.prf:
@@ -436,7 +437,6 @@ Makefile: ../terminal/terminal.pro ../../../../Qt/5.15.2/mingw81_32/mkspecs/win3
 ../../../../Qt/5.15.2/mingw81_32/lib/Qt5SerialPort.prl:
 ../../../../Qt/5.15.2/mingw81_32/lib/Qt5Core.prl:
 ../../../../Qt/5.15.2/mingw81_32/lib/qtmain.prl:
-.qmake.stash:
 ../../../../Qt/5.15.2/mingw81_32/mkspecs/features/build_pass.prf:
 ../terminal/terminal.qrc:
 qmake: FORCE
