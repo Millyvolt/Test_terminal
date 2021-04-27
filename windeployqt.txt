@@ -4,4 +4,4 @@ utility path:
         C:\Qt\5.15.2\mingw81_32\bin
 
 command:
-        windeployqt --dir C:\git_repos\Test_terminal\serialport\terminal_app C:\git_repos\Test_terminal\serialport\build-terminal-Desktop_Qt_5_15_0_MinGW_32_bit-Debug\debug\terminal.exe
+        windeployqt --dir C:\git_repos\Test_terminal\serialport\terminal_app C:\git_repos\Test_terminal\serialport\build-terminal-Desktop_Qt_5_15_0_MinGW_32_bit-Release\release\terminal.exe

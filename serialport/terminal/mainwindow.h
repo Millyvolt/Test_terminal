@@ -104,6 +104,12 @@ private slots:
 
     void on_timeCheckBox_stateChanged(int arg1);
 
+    void on_lineEdit_returnPressed();
+
+    void on_lineEdit_textEdited(const QString &arg1);
+
+    void on_searchResetButton_clicked();
+
 private:
     void initActionsConnections();
 
@@ -127,6 +133,7 @@ private:
     bool repeat_timer_on = false;
     bool time_checkbox = false;
     bool hex_console = true;
+    bool start_search = true;
 
     QTimer *repeat_timer = nullptr;
 };

@@ -174,9 +174,21 @@ void MainWindow::writeData(const QByteArray &data)
     if (m_serial->isOpen())
     {
         m_serial->write(data);
-        m_console->insertPlainText("\n\n<<<<");
-        m_console->putData(data);
-        m_console->insertPlainText("\n");
+        m_ui->plainTextEdit_3->insertPlainText("\n\n<<<<");
+
+        QTime time = QTime::currentTime();
+
+        m_ui->plainTextEdit_3->insertPlainText("\n" + time.toString());
+
+        if(!hex_console)
+            m_ui->plainTextEdit_3->insertPlainText(data);
+        else
+            m_ui->plainTextEdit_3->insertPlainText("\n" + data.toHex(' '));
+
+        QScrollBar *bar = m_ui->plainTextEdit_3->verticalScrollBar();
+        bar->setValue(bar->maximum());
+
+        m_ui->plainTextEdit_3->insertPlainText("\n");
     }
     else
         QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
@@ -335,7 +347,7 @@ void MainWindow::on_hexInConsoleCheckBox_stateChanged(int arg1)
 
 void MainWindow::on_actionFastConnect_triggered()
 {
-    m_serial->setPortName("COM12");
+    m_serial->setPortName("COM5");
     m_serial->setBaudRate(QSerialPort::Baud115200);
     m_serial->setDataBits(QSerialPort::Data8);
     m_serial->setParity(QSerialPort::NoParity);
@@ -348,7 +360,7 @@ void MainWindow::on_actionFastConnect_triggered()
         m_ui->actionDisconnect->setEnabled(true);
         m_ui->actionConfigure->setEnabled(false);
         showStatusMessage(tr("Connected to %1 : %2, %3, %4, %5, %6")
-                          .arg("COM12").arg(QString::number(m_serial->baudRate())).arg(QString::number(m_serial->dataBits()))
+                          .arg(m_serial->portName()).arg(QString::number(m_serial->baudRate())).arg(QString::number(m_serial->dataBits()))
                           .arg(QString::number(m_serial->parity())).arg(QString::number(m_serial->stopBits())).arg(QString::number(m_serial->flowControl())));
     } else {
         QMessageBox::critical(this, tr("Error"), m_serial->errorString());
@@ -404,4 +416,39 @@ void MainWindow::on_timeCheckBox_stateChanged(int arg1)
         time_checkbox = true;
     else
         time_checkbox = false;
+}
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+    if(start_search)
+    {
+        m_ui->plainTextEdit_3->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+        m_ui->plainTextEdit_3->setFocus();
+        if( m_ui->plainTextEdit_3->find(m_ui->lineEdit->text()) == false )
+            QMessageBox::information(this, tr("Info"), tr("0 matches"));
+        else
+            start_search = false;
+    }
+    else
+    {
+        if( m_ui->plainTextEdit_3->find(m_ui->lineEdit->text()) == false )
+        {
+            QMessageBox::information(this, tr("Info"), tr("No more matches"));
+            start_search = true;
+        }
+    }
+
+    m_ui->lineEdit->setFocus();
+}
+
+void MainWindow::on_lineEdit_textEdited(const QString &arg1)
+{
+    Q_UNUSED(arg1)
+    start_search = true;
+}
+
+void MainWindow::on_searchResetButton_clicked()
+{
+    start_search = true;
+    m_ui->lineEdit->setFocus();
 }

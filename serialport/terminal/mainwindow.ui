@@ -51,7 +51,11 @@
        </spacer>
       </item>
       <item row="0" column="0" colspan="3">
-       <widget class="QPlainTextEdit" name="plainTextEdit_3"/>
+       <widget class="QPlainTextEdit" name="plainTextEdit_3">
+        <property name="textInteractionFlags">
+         <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -232,6 +236,70 @@
          </size>
         </property>
        </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinAndMaxSize</enum>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="searchResetButton">
+        <property name="text">
+         <string>Reset search</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="hexSearchCheckBox">
+        <property name="text">
+         <string>Hex</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="5">
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>Input data to search + &quot;Enter&quot;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QCheckBox" name="caseSensCheckBox">
+        <property name="text">
+         <string>Case sensitive</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <spacer name="horizontalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="3">
+       <widget class="QCheckBox" name="wholeWordCheckBox">
+        <property name="text">
+         <string>Whole word</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
