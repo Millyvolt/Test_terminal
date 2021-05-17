@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[19];
-    char stringdata0[326];
+    QByteArrayData data[24];
+    char stringdata0[465];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -50,7 +50,12 @@ QT_MOC_LITERAL(14, 175, 36), // "on_hexInConsoleCheckBox_state..."
 QT_MOC_LITERAL(15, 212, 30), // "on_actionFastConnect_triggered"
 QT_MOC_LITERAL(16, 243, 22), // "on_sendButton2_clicked"
 QT_MOC_LITERAL(17, 266, 30), // "on_repeatCheckBox_stateChanged"
-QT_MOC_LITERAL(18, 297, 28) // "on_timeCheckBox_stateChanged"
+QT_MOC_LITERAL(18, 297, 28), // "on_timeCheckBox_stateChanged"
+QT_MOC_LITERAL(19, 326, 25), // "on_lineEdit_returnPressed"
+QT_MOC_LITERAL(20, 352, 22), // "on_lineEdit_textEdited"
+QT_MOC_LITERAL(21, 375, 28), // "on_searchResetButton_clicked"
+QT_MOC_LITERAL(22, 404, 28), // "on_checkBoxHex2_stateChanged"
+QT_MOC_LITERAL(23, 433, 31) // "on_checkBoxRepeat2_stateChanged"
 
     },
     "MainWindow\0openSerialPort\0\0closeSerialPort\0"
@@ -61,7 +66,12 @@ QT_MOC_LITERAL(18, 297, 28) // "on_timeCheckBox_stateChanged"
     "on_actionFastConnect_triggered\0"
     "on_sendButton2_clicked\0"
     "on_repeatCheckBox_stateChanged\0"
-    "on_timeCheckBox_stateChanged"
+    "on_timeCheckBox_stateChanged\0"
+    "on_lineEdit_returnPressed\0"
+    "on_lineEdit_textEdited\0"
+    "on_searchResetButton_clicked\0"
+    "on_checkBoxHex2_stateChanged\0"
+    "on_checkBoxRepeat2_stateChanged"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,7 +81,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      18,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -79,19 +89,24 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   79,    2, 0x08 /* Private */,
-       3,    0,   80,    2, 0x08 /* Private */,
-       4,    0,   81,    2, 0x08 /* Private */,
-       5,    1,   82,    2, 0x08 /* Private */,
-       7,    0,   85,    2, 0x08 /* Private */,
-       8,    1,   86,    2, 0x08 /* Private */,
-      11,    0,   89,    2, 0x08 /* Private */,
-      12,    1,   90,    2, 0x08 /* Private */,
-      14,    1,   93,    2, 0x08 /* Private */,
-      15,    0,   96,    2, 0x08 /* Private */,
-      16,    0,   97,    2, 0x08 /* Private */,
-      17,    1,   98,    2, 0x08 /* Private */,
-      18,    1,  101,    2, 0x08 /* Private */,
+       1,    0,  104,    2, 0x08 /* Private */,
+       3,    0,  105,    2, 0x08 /* Private */,
+       4,    0,  106,    2, 0x08 /* Private */,
+       5,    1,  107,    2, 0x08 /* Private */,
+       7,    0,  110,    2, 0x08 /* Private */,
+       8,    1,  111,    2, 0x08 /* Private */,
+      11,    0,  114,    2, 0x08 /* Private */,
+      12,    1,  115,    2, 0x08 /* Private */,
+      14,    1,  118,    2, 0x08 /* Private */,
+      15,    0,  121,    2, 0x08 /* Private */,
+      16,    0,  122,    2, 0x08 /* Private */,
+      17,    1,  123,    2, 0x08 /* Private */,
+      18,    1,  126,    2, 0x08 /* Private */,
+      19,    0,  129,    2, 0x08 /* Private */,
+      20,    1,  130,    2, 0x08 /* Private */,
+      21,    0,  133,    2, 0x08 /* Private */,
+      22,    1,  134,    2, 0x08 /* Private */,
+      23,    1,  137,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -104,6 +119,11 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::Int,   13,
     QMetaType::Void, QMetaType::Int,   13,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   13,
+    QMetaType::Void, QMetaType::Int,   13,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   13,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,   13,
     QMetaType::Void, QMetaType::Int,   13,
@@ -130,6 +150,11 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 10: _t->on_sendButton2_clicked(); break;
         case 11: _t->on_repeatCheckBox_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 12: _t->on_timeCheckBox_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->on_lineEdit_returnPressed(); break;
+        case 14: _t->on_lineEdit_textEdited((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 15: _t->on_searchResetButton_clicked(); break;
+        case 16: _t->on_checkBoxHex2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 17: _t->on_checkBoxRepeat2_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -164,13 +189,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 13)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 18;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 13)
+        if (_id < 18)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 13;
+        _id -= 18;
     }
     return _id;
 }

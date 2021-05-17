@@ -67,7 +67,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_console(new Console),
     m_settings(new SettingsDialog),
     m_serial(new QSerialPort(this)),
-    repeat_timer(new QTimer(this))
+    repeat_timer(new QTimer(this)),
+    repeat_timer2(new QTimer(this))
 {
     m_ui->setupUi(this);
 
@@ -80,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QPalette *text3_pal = new QPalette;
     text3_pal->setColor(QPalette::Base, Qt::black);
     text3_pal->setColor(QPalette::Text, Qt::green);
-    m_ui->plainTextEdit_3->setPalette(*text3_pal);
+    m_ui->plainTextEditConsole->setPalette(*text3_pal);
 
 //    m_ui->gridLayout->addWidget(m_ui->plainTextEdit_3);
 //    m_ui->gridLayout->addWidget(m_ui->hexInConsoleCheckBox);
@@ -94,25 +95,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_ui->statusBar->addWidget(m_status);
 
-    m_ui->plainTextEdit_2->setPlaceholderText("Data field 2");
-    m_ui->plainTextEdit->setPlainText("55AA496AD500000000000000000000000000000000000000000000000000"
+    m_ui->plainTextEditField2->setPlaceholderText("Data field 2");
+    m_ui->plainTextEditField1->setPlainText("55AA496AD500000000000000000000000000000000000000000000000000"
                                       "000000703A11FA4000000000F0390F00000000000000000070D31467ABA5"
                                       "001BF8FFFFFF0700580055580A00D84BC30D");
 
     //set sizes of text fields
-    m_console->setMinimumSize(650, 200);
-    m_console->setMaximumSize(10000, 1000);
-    m_ui->plainTextEdit_3->setMinimumSize(650, 200);
-    m_ui->plainTextEdit_3->setMaximumSize(10000, 1000);
-    m_ui->plainTextEdit_2->setMinimumSize(650, 40);
-    m_ui->plainTextEdit_2->setMaximumSize(10000, 100);
-    m_ui->plainTextEdit->setMinimumSize(650, 40);
-    m_ui->plainTextEdit->setMaximumSize(10000, 100);
+//    m_console->setMinimumSize(650, 200);
+//    m_console->setMaximumSize(10000, 1000);
+    m_ui->plainTextEditConsole->setMinimumSize(650, 500);
+    m_ui->plainTextEditConsole->setMaximumSize(10000, 1000);
+    m_ui->plainTextEditField2->setMinimumSize(650, 40);
+    m_ui->plainTextEditField2->setMaximumSize(10000, 70);
+    m_ui->plainTextEditField1->setMinimumSize(650, 40);
+    m_ui->plainTextEditField1->setMaximumSize(10000, 70);
 
 
     initActionsConnections();
 
     connect(repeat_timer, &QTimer::timeout, this, &MainWindow::Send_data);
+    connect(repeat_timer2, &QTimer::timeout, this, &MainWindow::Send_data2);
 
     connect(m_serial, &QSerialPort::errorOccurred, this, &MainWindow::handleError);
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
@@ -174,21 +176,23 @@ void MainWindow::writeData(const QByteArray &data)
     if (m_serial->isOpen())
     {
         m_serial->write(data);
-        m_ui->plainTextEdit_3->insertPlainText("\n\n<<<<");
+        m_ui->plainTextEditConsole->insertPlainText("\n<<<<");
 
-        QTime time = QTime::currentTime();
-
-        m_ui->plainTextEdit_3->insertPlainText("\n" + time.toString());
+        if(time_checkbox)
+        {
+            QTime time = QTime::currentTime();
+            m_ui->plainTextEditConsole->insertPlainText("\n" + time.toString());
+        }
 
         if(!hex_console)
-            m_ui->plainTextEdit_3->insertPlainText(data);
+            m_ui->plainTextEditConsole->insertPlainText("\n" + data);
         else
-            m_ui->plainTextEdit_3->insertPlainText("\n" + data.toHex(' '));
+            m_ui->plainTextEditConsole->insertPlainText("\n" + data.toHex(' '));
 
-        QScrollBar *bar = m_ui->plainTextEdit_3->verticalScrollBar();
+        QScrollBar *bar = m_ui->plainTextEditConsole->verticalScrollBar();
         bar->setValue(bar->maximum());
 
-        m_ui->plainTextEdit_3->insertPlainText("\n");
+       // m_ui->plainTextEditConsole->insertPlainText("\n");
     }
     else
         QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
@@ -201,17 +205,17 @@ void MainWindow::readData()
 
     //    m_console->putData(data);
 
-    m_ui->plainTextEdit_3->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
+    m_ui->plainTextEditConsole->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 
     if(time_checkbox)
-        m_ui->plainTextEdit_3->insertPlainText("\n" + time.toString() + ":" + QString::number(time.msec()) + "\t");
+        m_ui->plainTextEditConsole->insertPlainText("\n" + time.toString() + ":" + QString::number(time.msec()) + "\t");
 
     if(hex_console)
-        m_ui->plainTextEdit_3->insertPlainText( (time_checkbox? "" : "\n") + data.toHex(' '));
+        m_ui->plainTextEditConsole->insertPlainText( (time_checkbox? "" : "\n") + data.toHex(' '));
     else
-        m_ui->plainTextEdit_3->insertPlainText(data);
+        m_ui->plainTextEditConsole->insertPlainText(data);
 
-    QScrollBar *bar = m_ui->plainTextEdit_3->verticalScrollBar();
+    QScrollBar *bar = m_ui->plainTextEditConsole->verticalScrollBar();
     bar->setValue(bar->maximum());
 }
 
@@ -230,7 +234,7 @@ void MainWindow::initActionsConnections()
     connect(m_ui->actionQuit, &QAction::triggered, this, &MainWindow::close);
     connect(m_ui->actionConfigure, &QAction::triggered, this, &MainWindow::showSettingsDialog);//m_settings, &SettingsDialog::show);
 //    connect(m_ui->actionClear, &QAction::triggered, m_console, &Console::clear);
-    connect(m_ui->actionClear, &QAction::triggered, m_ui->plainTextEdit_3, &QPlainTextEdit::clear);
+    connect(m_ui->actionClear, &QAction::triggered, m_ui->plainTextEditConsole, &QPlainTextEdit::clear);
     connect(m_ui->actionAbout, &QAction::triggered, this, &MainWindow::about);
     connect(m_ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
 }
@@ -251,7 +255,7 @@ void MainWindow::Send_data()
 {
     if (m_serial->isOpen())
     {
-        QString string_tmp =  m_ui->plainTextEdit->toPlainText();
+        QString string_tmp =  m_ui->plainTextEditField1->toPlainText();
         QByteArray arr_tmp = string_tmp.toLocal8Bit();
 
         if(hex_checkbox)
@@ -278,6 +282,42 @@ void MainWindow::Send_data()
             {
                 m_ui->repeat_label->setText("Repeat off");
                 Set_label_color(m_ui->repeat_label, Qt::black);
+            }
+        }
+    }
+}
+
+void MainWindow::Send_data2()
+{
+    if (m_serial->isOpen())
+    {
+        QString string_tmp =  m_ui->plainTextEditField2->toPlainText();
+        QByteArray arr_tmp = string_tmp.toLocal8Bit();
+
+        if(hex_checkbox2)
+        {
+            QByteArray arr_hex_decoded = QByteArray::fromHex(arr_tmp);
+            writeData(arr_hex_decoded);
+        }
+        else
+            writeData(arr_tmp);
+    }
+    else
+    {
+        QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
+        if(repeat_timer_on2)
+        {
+            repeat_timer2->stop();
+            repeat_timer_on2 = false;
+            if(repeat_checkbox2)
+            {
+                m_ui->label_repeat2->setText("Repeat on");
+                Set_label_color(m_ui->label_repeat2, Qt::green);
+            }
+            else
+            {
+                m_ui->label_repeat2->setText("Repeat off");
+                Set_label_color(m_ui->label_repeat2, Qt::black);
             }
         }
     }
@@ -329,12 +369,68 @@ void MainWindow::on_sendButton_clicked()
         Send_data();
 }
 
+void MainWindow::on_sendButton2_clicked()
+{
+    if( repeat_checkbox2 == true && repeat_timer_on2 == false && m_serial->isOpen() )
+    {
+        Send_data2();
+        repeat_timer2->start(m_ui->spinBox2->value());
+        repeat_timer_on2 = true;
+        m_ui->label_repeat2->setText("Sending");
+        Set_label_color(m_ui->label_repeat2, Qt::red);
+    }
+    else if(!m_serial->isOpen())
+        QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
+    else if(repeat_timer_on2)
+    {
+        repeat_timer2->stop();
+        repeat_timer_on2 = false;
+        if(repeat_checkbox2)
+        {
+            m_ui->label_repeat2->setText("Repeat on");
+            Set_label_color(m_ui->label_repeat2, Qt::green);
+        }
+        else
+        {
+            m_ui->label_repeat2->setText("Repeat off");
+            Set_label_color(m_ui->label_repeat2, Qt::black);
+        }
+    }
+    else
+        Send_data2();
+
+
+//    if (m_serial->isOpen())
+//    {
+//        QString string_tmp =  m_ui->plainTextEditField2->toPlainText();
+//        QByteArray arr_tmp = string_tmp.toLocal8Bit();
+
+//        if(hex_checkbox2)
+//        {
+//            QByteArray arr_hex_decoded = QByteArray::fromHex(arr_tmp);
+//            writeData(arr_hex_decoded);
+//        }
+//        else
+//            writeData(arr_tmp);
+//    }
+//    else
+//        QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
+}
+
 void MainWindow::on_HexCheckBox_stateChanged(int arg1)
 {
     if(arg1)
         hex_checkbox = true;
     else
         hex_checkbox = false;
+}
+
+void MainWindow::on_checkBoxHex2_stateChanged(int arg1)
+{
+    if(arg1)
+        hex_checkbox2 = true;
+    else
+        hex_checkbox2 = false;
 }
 
 void MainWindow::on_hexInConsoleCheckBox_stateChanged(int arg1)
@@ -369,25 +465,6 @@ void MainWindow::on_actionFastConnect_triggered()
     }
 }
 
-void MainWindow::on_sendButton2_clicked()
-{
-    if (m_serial->isOpen())
-    {
-        QString string_tmp =  m_ui->plainTextEdit_2->toPlainText();
-        QByteArray arr_tmp = string_tmp.toLocal8Bit();
-
-        if(hex_checkbox2)
-        {
-            QByteArray arr_hex_decoded = QByteArray::fromHex(arr_tmp);
-            writeData(arr_hex_decoded);
-        }
-        else
-            writeData(arr_tmp);
-    }
-    else
-        QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
-}
-
 void MainWindow::on_repeatCheckBox_stateChanged(int arg1)
 {
     if(arg1)
@@ -410,6 +487,28 @@ void MainWindow::on_repeatCheckBox_stateChanged(int arg1)
     }
 }
 
+void MainWindow::on_checkBoxRepeat2_stateChanged(int arg1)
+{
+    if(arg1)
+    {
+        repeat_checkbox2 = true;
+        m_ui->label_repeat2->setText("Repeat on");
+        Set_label_color(m_ui->label_repeat2, Qt::green);
+    }
+    else
+    {
+        repeat_checkbox2 = false;
+        m_ui->label_repeat2->setText("Repeat off");
+        Set_label_color(m_ui->label_repeat2, Qt::black);
+    }
+
+    if(repeat_timer_on2)
+    {
+        m_ui->label_repeat2->setText("Sending");
+        Set_label_color(m_ui->label_repeat2, Qt::red);
+    }
+}
+
 void MainWindow::on_timeCheckBox_stateChanged(int arg1)
 {
     if(arg1)
@@ -422,16 +521,16 @@ void MainWindow::on_lineEdit_returnPressed()
 {
     if(start_search)
     {
-        m_ui->plainTextEdit_3->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
-        m_ui->plainTextEdit_3->setFocus();
-        if( m_ui->plainTextEdit_3->find(m_ui->lineEdit->text()) == false )
+        m_ui->plainTextEditConsole->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+        m_ui->plainTextEditConsole->setFocus();
+        if( m_ui->plainTextEditConsole->find(m_ui->lineEdit->text()) == false )
             QMessageBox::information(this, tr("Info"), tr("0 matches"));
         else
             start_search = false;
     }
     else
     {
-        if( m_ui->plainTextEdit_3->find(m_ui->lineEdit->text()) == false )
+        if( m_ui->plainTextEditConsole->find(m_ui->lineEdit->text()) == false )
         {
             QMessageBox::information(this, tr("Info"), tr("No more matches"));
             start_search = true;
@@ -452,3 +551,5 @@ void MainWindow::on_searchResetButton_clicked()
     start_search = true;
     m_ui->lineEdit->setFocus();
 }
+
+
