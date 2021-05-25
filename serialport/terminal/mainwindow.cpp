@@ -68,7 +68,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_settings(new SettingsDialog),
     m_serial(new QSerialPort(this)),
     repeat_timer(new QTimer(this)),
-    repeat_timer2(new QTimer(this))
+    repeat_timer2(new QTimer(this)),
+    cursor(new QTextCursor)
 {
     m_ui->setupUi(this);
 
@@ -95,21 +96,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_ui->statusBar->addWidget(m_status);
 
+    m_ui->plainTextEditField1->setPlaceholderText("Data field 1");
     m_ui->plainTextEditField2->setPlaceholderText("Data field 2");
-    m_ui->plainTextEditField1->setPlainText("55AA496AD500000000000000000000000000000000000000000000000000"
-                                      "000000703A11FA4000000000F0390F00000000000000000070D31467ABA5"
-                                      "001BF8FFFFFF0700580055580A00D84BC30D");
+//    m_ui->plainTextEditField1->setPlainText("55AA496AD500000000000000000000000000000000000000000000000000"
+//                                      "000000703A11FA4000000000F0390F00000000000000000070D31467ABA5"
+//                                      "001BF8FFFFFF0700580055580A00D84BC30D");
 
     //set sizes of text fields
 //    m_console->setMinimumSize(650, 200);
 //    m_console->setMaximumSize(10000, 1000);
-    m_ui->plainTextEditConsole->setMinimumSize(650, 500);
+    m_ui->plainTextEditConsole->setMinimumSize(650, 400);
     m_ui->plainTextEditConsole->setMaximumSize(10000, 1000);
     m_ui->plainTextEditField2->setMinimumSize(650, 40);
     m_ui->plainTextEditField2->setMaximumSize(10000, 70);
     m_ui->plainTextEditField1->setMinimumSize(650, 40);
     m_ui->plainTextEditField1->setMaximumSize(10000, 70);
 
+    *cursor = m_ui->plainTextEditConsole->textCursor();
+    m_ui->plainTextEditConsole->setTextCursor(*cursor);
 
     initActionsConnections();
 
@@ -181,7 +185,7 @@ void MainWindow::writeData(const QByteArray &data)
         if(time_checkbox)
         {
             QTime time = QTime::currentTime();
-            m_ui->plainTextEditConsole->insertPlainText("\n" + time.toString());
+            m_ui->plainTextEditConsole->insertPlainText("\n" + time.toString() + ":" + QString::number(time.msec()) + "\t");
         }
 
         if(!hex_console)
@@ -201,14 +205,21 @@ void MainWindow::writeData(const QByteArray &data)
 void MainWindow::readData()
 {
     const QByteArray data = m_serial->readAll();
-    QTime time = QTime::currentTime();
+//    QTextCursor* cursor = new QTextCursor;
+    int position;
+
+//    *cursor = m_ui->plainTextEditConsole->textCursor();
+//    m_ui->plainTextEditConsole->setTextCursor(*cursor);
 
     //    m_console->putData(data);
 
-    m_ui->plainTextEditConsole->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
+//    m_ui->plainTextEditConsole->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 
     if(time_checkbox)
+    {
+        QTime time = QTime::currentTime();
         m_ui->plainTextEditConsole->insertPlainText("\n" + time.toString() + ":" + QString::number(time.msec()) + "\t");
+    }
 
     if(hex_console)
         m_ui->plainTextEditConsole->insertPlainText( (time_checkbox? "" : "\n") + data.toHex(' '));
@@ -217,6 +228,17 @@ void MainWindow::readData()
 
     QScrollBar *bar = m_ui->plainTextEditConsole->verticalScrollBar();
     bar->setValue(bar->maximum());
+
+    position = cursor->position();
+
+    QString pos_str = QString::number(position);
+    m_ui->plainTextEditConsole->insertPlainText("\n" + pos_str);
+
+    cursor->setPosition(position - 30);
+
+    pos_str = QString::number(position);
+    m_ui->plainTextEditConsole->insertPlainText("\n" + pos_str);
+
 }
 
 void MainWindow::handleError(QSerialPort::SerialPortError error)

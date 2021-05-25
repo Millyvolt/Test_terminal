@@ -55,6 +55,7 @@
 #include <QMainWindow>
 #include <QSerialPort>
 #include <QTimer>
+#include <QTextCursor>
 
 QT_BEGIN_NAMESPACE
 
@@ -144,6 +145,8 @@ private:
 
     QTimer *repeat_timer = nullptr;
     QTimer *repeat_timer2 = nullptr;
+
+    QTextCursor *cursor = nullptr;
 };
 
 #endif // MAINWINDOW_H
