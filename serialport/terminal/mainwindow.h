@@ -115,6 +115,8 @@ private slots:
 
     void on_checkBoxRepeat2_stateChanged(int arg1);
 
+    void on_checkBoxCapture_stateChanged(int arg1);
+
 private:
     void initActionsConnections();
 
@@ -142,6 +144,7 @@ private:
     bool time_checkbox = false;
     bool hex_console = true;
     bool start_search = true;
+    bool capture_mode = false;
 
     QTimer *repeat_timer = nullptr;
     QTimer *repeat_timer2 = nullptr;

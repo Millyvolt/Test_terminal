@@ -250,38 +250,7 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="searchResetButton">
-        <property name="text">
-         <string>Reset search</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QCheckBox" name="hexSearchCheckBox">
-        <property name="text">
-         <string>Hex</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="5">
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="placeholderText">
-         <string>Input data to search + &quot;Enter&quot;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QCheckBox" name="caseSensCheckBox">
-        <property name="text">
-         <string>Case sensitive</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="4">
+      <item row="1" column="5">
        <spacer name="horizontalSpacer_6">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -294,10 +263,48 @@
         </property>
        </spacer>
       </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="searchResetButton">
+        <property name="text">
+         <string>Reset search</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="6">
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>Input data to search + &quot;Enter&quot;</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="3">
        <widget class="QCheckBox" name="wholeWordCheckBox">
         <property name="text">
          <string>Whole word</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QCheckBox" name="caseSensCheckBox">
+        <property name="text">
+         <string>Case sensitive</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="hexSearchCheckBox">
+        <property name="text">
+         <string>Hex</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QCheckBox" name="checkBoxCapture">
+        <property name="text">
+         <string>Capture mode</string>
         </property>
        </widget>
       </item>

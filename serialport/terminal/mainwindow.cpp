@@ -112,8 +112,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->plainTextEditField1->setMinimumSize(650, 40);
     m_ui->plainTextEditField1->setMaximumSize(10000, 70);
 
-    *cursor = m_ui->plainTextEditConsole->textCursor();
-    m_ui->plainTextEditConsole->setTextCursor(*cursor);
+//    *cursor = m_ui->plainTextEditConsole->textCursor();
+//    m_ui->plainTextEditConsole->setTextCursor(*cursor);
 
     initActionsConnections();
 
@@ -204,16 +204,12 @@ void MainWindow::writeData(const QByteArray &data)
 
 void MainWindow::readData()
 {
-    const QByteArray data = m_serial->readAll();
-//    QTextCursor* cursor = new QTextCursor;
-    int position;
-
-//    *cursor = m_ui->plainTextEditConsole->textCursor();
-//    m_ui->plainTextEditConsole->setTextCursor(*cursor);
+    QByteArray data = m_serial->readAll();
 
     //    m_console->putData(data);
 
-//    m_ui->plainTextEditConsole->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
+    m_ui->plainTextEditConsole->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
+
 
     if(time_checkbox)
     {
@@ -222,23 +218,35 @@ void MainWindow::readData()
     }
 
     if(hex_console)
-        m_ui->plainTextEditConsole->insertPlainText( (time_checkbox? "" : "\n") + data.toHex(' '));
+    {
+        data = data.toHex(' ');
+        m_ui->plainTextEditConsole->insertPlainText( (time_checkbox ? "" : "\n") + data); //.toHex(' '));
+    }
     else
         m_ui->plainTextEditConsole->insertPlainText(data);
 
+
+    if(capture_mode)
+    {
+        int pos;
+
+        *cursor = m_ui->plainTextEditConsole->textCursor();
+        pos = cursor->position() - (data.size() + 20);
+        cursor->setPosition(pos < 0 ? 0 : pos);
+        m_ui->plainTextEditConsole->setTextCursor(*cursor);
+
+        m_ui->plainTextEditConsole->setFocus();
+
+        if( m_ui->plainTextEditConsole->find(m_ui->lineEdit->text()) == true )
+        {
+            MainWindow::closeSerialPort();
+            QMessageBox::information(this, tr("Info"), tr("found!"));
+        }
+    }
+
+
     QScrollBar *bar = m_ui->plainTextEditConsole->verticalScrollBar();
     bar->setValue(bar->maximum());
-
-    position = cursor->position();
-
-    QString pos_str = QString::number(position);
-    m_ui->plainTextEditConsole->insertPlainText("\n" + pos_str);
-
-    cursor->setPosition(position - 30);
-
-    pos_str = QString::number(position);
-    m_ui->plainTextEditConsole->insertPlainText("\n" + pos_str);
-
 }
 
 void MainWindow::handleError(QSerialPort::SerialPortError error)
@@ -574,4 +582,10 @@ void MainWindow::on_searchResetButton_clicked()
     m_ui->lineEdit->setFocus();
 }
 
-
+void MainWindow::on_checkBoxCapture_stateChanged(int arg1)
+{
+    if(arg1)
+        capture_mode = true;
+    else
+        capture_mode = false;
+}
