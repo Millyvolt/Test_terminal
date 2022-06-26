@@ -96,8 +96,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_ui->statusBar->addWidget(m_status);
 
-    m_ui->plainTextEditField1->setPlaceholderText("Data field 1");
-    m_ui->plainTextEditField2->setPlaceholderText("Data field 2");
+    m_ui->plainTextEditField1->setPlaceholderText("Input data to send 1");
+    m_ui->plainTextEditField2->setPlaceholderText("Input data to send 2");
 //    m_ui->plainTextEditField1->setPlainText("55AA496AD500000000000000000000000000000000000000000000000000"
 //                                      "000000703A11FA4000000000F0390F00000000000000000070D31467ABA5"
 //                                      "001BF8FFFFFF0700580055580A00D84BC30D");
@@ -107,10 +107,10 @@ MainWindow::MainWindow(QWidget *parent) :
 //    m_console->setMaximumSize(10000, 1000);
     m_ui->plainTextEditConsole->setMinimumSize(650, 400);
     m_ui->plainTextEditConsole->setMaximumSize(10000, 1000);
-    m_ui->plainTextEditField2->setMinimumSize(650, 40);
-    m_ui->plainTextEditField2->setMaximumSize(10000, 70);
-    m_ui->plainTextEditField1->setMinimumSize(650, 40);
-    m_ui->plainTextEditField1->setMaximumSize(10000, 70);
+    m_ui->plainTextEditField2->setMinimumSize(700, 26);
+    m_ui->plainTextEditField2->setMaximumSize(10000, 26);
+    m_ui->plainTextEditField1->setMinimumSize(700, 26);
+    m_ui->plainTextEditField1->setMaximumSize(10000, 26);
 
 //    *cursor = m_ui->plainTextEditConsole->textCursor();
 //    m_ui->plainTextEditConsole->setTextCursor(*cursor);
