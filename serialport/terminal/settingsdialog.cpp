@@ -77,6 +77,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
             this, &SettingsDialog::checkCustomDevicePathPolicy);
 
     fillPortsParameters();
+    m_ui->baudRateBox->setCurrentIndex(3);
     fillPortsInfo();
 
     updateSettings();
@@ -85,6 +86,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 SettingsDialog::~SettingsDialog()
 {
     delete m_ui;
+    delete m_intValidator;
 }
 
 SettingsDialog::Settings SettingsDialog::settings() const
@@ -164,6 +166,8 @@ void SettingsDialog::fillPortsParameters()
 
 void SettingsDialog::fillPortsInfo()
 {
+    QString currentportname = m_ui->serialPortInfoListBox->currentText();
+
     m_ui->serialPortInfoListBox->clear();
     QString description;
     QString manufacturer;
@@ -186,6 +190,8 @@ void SettingsDialog::fillPortsInfo()
     }
 
     m_ui->serialPortInfoListBox->addItem(tr("Custom"));
+
+    m_ui->serialPortInfoListBox->setCurrentText(currentportname);
 }
 
 void SettingsDialog::updateSettings()
@@ -216,7 +222,7 @@ void SettingsDialog::updateSettings()
                 m_ui->flowControlBox->itemData(m_ui->flowControlBox->currentIndex()).toInt());
     m_currentSettings.stringFlowControl = m_ui->flowControlBox->currentText();
 
-    m_currentSettings.localEchoEnabled = m_ui->localEchoCheckBox->isChecked();
+//    m_currentSettings.localEchoEnabled = m_ui->localEchoCheckBox->isChecked();
 }
 
 //void SettingsDialog::fastConnectSettings()
@@ -235,7 +241,7 @@ void SettingsDialog::updateSettings()
 
 //    m_currentSettings.flowControl = QSerialPort::NoFlowControl;
 
-////    m_currentSettings.localEchoEnabled = m_ui->localEchoCheckBox->isChecked();
+// //    m_currentSettings.localEchoEnabled = m_ui->localEchoCheckBox->isChecked();
 //}
 
 

@@ -88,7 +88,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1195, 636);
+        MainWindow->resize(1195, 694);
         MainWindow->setAcceptDrops(false);
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
@@ -213,7 +213,7 @@ public:
 
         hexInConsoleCheckBox = new QCheckBox(centralWidget);
         hexInConsoleCheckBox->setObjectName(QString::fromUtf8("hexInConsoleCheckBox"));
-        hexInConsoleCheckBox->setChecked(true);
+        hexInConsoleCheckBox->setChecked(false);
 
         gridLayout_4->addWidget(hexInConsoleCheckBox, 0, 0, 1, 1);
 

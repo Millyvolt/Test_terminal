@@ -142,7 +142,7 @@ void MainWindow::openSerialPort()
     m_serial->setFlowControl(p.flowControl);
     if (m_serial->open(QIODevice::ReadWrite)) {
         m_console->setEnabled(true);
-        m_console->setLocalEchoEnabled(p.localEchoEnabled);
+//        m_console->setLocalEchoEnabled(p.localEchoEnabled);
         m_ui->actionConnect->setEnabled(false);
         m_ui->actionDisconnect->setEnabled(true);
         m_ui->actionConfigure->setEnabled(false);
@@ -481,7 +481,7 @@ void MainWindow::on_actionFastConnect_triggered()
     m_serial->setFlowControl(QSerialPort::NoFlowControl);
     if (m_serial->open(QIODevice::ReadWrite)) {
         m_console->setEnabled(true);
-        m_console->setLocalEchoEnabled(true);
+//        m_console->setLocalEchoEnabled(true);
         m_ui->actionConnect->setEnabled(false);
         m_ui->actionDisconnect->setEnabled(true);
         m_ui->actionConfigure->setEnabled(false);

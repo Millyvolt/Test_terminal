@@ -81,10 +81,10 @@ void Console::putData(const QByteArray &data)
     bar->setValue(bar->maximum());
 }
 
-void Console::setLocalEchoEnabled(bool set)
-{
-    m_localEchoEnabled = set;
-}
+//void Console::setLocalEchoEnabled(bool set)
+//{
+//    m_localEchoEnabled = set;
+//}
 
 void Console::keyPressEvent(QKeyEvent *e)
 {
