@@ -46,27 +46,27 @@ public:
     QGridLayout *gridLayout;
     QPlainTextEdit *plainTextEditConsole;
     QGridLayout *gridLayout_4;
-    QCheckBox *HexCheckBox;
-    QSpacerItem *horizontalSpacer_4;
-    QPlainTextEdit *plainTextEditField2;
-    QPushButton *sendButton;
-    QSpinBox *spinBox;
-    QPlainTextEdit *plainTextEditField1;
-    QLabel *repeat_label;
-    QCheckBox *repeatCheckBox;
-    QLabel *label_ms;
     QSpacerItem *horizontalSpacer_2;
-    QCheckBox *hexInConsoleCheckBox;
-    QLabel *label_repeat2;
-    QPushButton *sendButton2;
-    QCheckBox *checkBoxHex2;
-    QCheckBox *checkBoxRepeat2;
-    QSpinBox *spinBox2;
-    QLabel *label_ms2;
     QSpacerItem *horizontalSpacer_5;
-    QSpacerItem *horizontalSpacer;
+    QLabel *label_ms;
+    QCheckBox *checkBoxHex2;
+    QLabel *label_ms2;
+    QCheckBox *HexCheckBox;
+    QPlainTextEdit *plainTextEditField1;
     QCheckBox *timeCheckBox;
+    QPushButton *sendButton;
+    QPlainTextEdit *plainTextEditField2;
+    QLabel *label_repeat2;
+    QSpacerItem *horizontalSpacer;
+    QSpacerItem *horizontalSpacer_4;
+    QPushButton *sendButton2;
+    QSpinBox *spinBox2;
+    QSpinBox *spinBox;
+    QCheckBox *checkBoxRepeat2;
     QSpacerItem *horizontalSpacer_3;
+    QCheckBox *hexInConsoleCheckBox;
+    QCheckBox *repeatCheckBox;
+    QLabel *repeat_label;
     QGridLayout *gridLayout_2;
     QGridLayout *gridLayout_5;
     QLineEdit *lineEdit;
@@ -142,30 +142,91 @@ public:
         gridLayout_4 = new QGridLayout();
         gridLayout_4->setSpacing(6);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        gridLayout_4->addItem(horizontalSpacer_2, 1, 15, 1, 1);
+
+        horizontalSpacer_5 = new QSpacerItem(10, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        gridLayout_4->addItem(horizontalSpacer_5, 2, 13, 2, 1);
+
+        label_ms = new QLabel(centralWidget);
+        label_ms->setObjectName(QString::fromUtf8("label_ms"));
+
+        gridLayout_4->addWidget(label_ms, 1, 12, 1, 1);
+
+        checkBoxHex2 = new QCheckBox(centralWidget);
+        checkBoxHex2->setObjectName(QString::fromUtf8("checkBoxHex2"));
+        checkBoxHex2->setChecked(true);
+
+        gridLayout_4->addWidget(checkBoxHex2, 2, 9, 2, 1);
+
+        label_ms2 = new QLabel(centralWidget);
+        label_ms2->setObjectName(QString::fromUtf8("label_ms2"));
+
+        gridLayout_4->addWidget(label_ms2, 2, 12, 2, 1);
+
         HexCheckBox = new QCheckBox(centralWidget);
         HexCheckBox->setObjectName(QString::fromUtf8("HexCheckBox"));
         HexCheckBox->setChecked(true);
 
         gridLayout_4->addWidget(HexCheckBox, 1, 9, 1, 1);
 
-        horizontalSpacer_4 = new QSpacerItem(10, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
-
-        gridLayout_4->addItem(horizontalSpacer_4, 1, 13, 1, 1);
-
-        plainTextEditField2 = new QPlainTextEdit(centralWidget);
-        plainTextEditField2->setObjectName(QString::fromUtf8("plainTextEditField2"));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        plainTextEditField1 = new QPlainTextEdit(centralWidget);
+        plainTextEditField1->setObjectName(QString::fromUtf8("plainTextEditField1"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(100);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(plainTextEditField2->sizePolicy().hasHeightForWidth());
-        plainTextEditField2->setSizePolicy(sizePolicy);
+        sizePolicy.setHeightForWidth(plainTextEditField1->sizePolicy().hasHeightForWidth());
+        plainTextEditField1->setSizePolicy(sizePolicy);
 
-        gridLayout_4->addWidget(plainTextEditField2, 2, 0, 2, 8);
+        gridLayout_4->addWidget(plainTextEditField1, 1, 0, 1, 8);
+
+        timeCheckBox = new QCheckBox(centralWidget);
+        timeCheckBox->setObjectName(QString::fromUtf8("timeCheckBox"));
+
+        gridLayout_4->addWidget(timeCheckBox, 0, 1, 1, 1);
 
         sendButton = new QPushButton(centralWidget);
         sendButton->setObjectName(QString::fromUtf8("sendButton"));
 
         gridLayout_4->addWidget(sendButton, 1, 8, 1, 1);
+
+        plainTextEditField2 = new QPlainTextEdit(centralWidget);
+        plainTextEditField2->setObjectName(QString::fromUtf8("plainTextEditField2"));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(100);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(plainTextEditField2->sizePolicy().hasHeightForWidth());
+        plainTextEditField2->setSizePolicy(sizePolicy1);
+
+        gridLayout_4->addWidget(plainTextEditField2, 2, 0, 2, 8);
+
+        label_repeat2 = new QLabel(centralWidget);
+        label_repeat2->setObjectName(QString::fromUtf8("label_repeat2"));
+        label_repeat2->setFrameShape(QFrame::Box);
+        label_repeat2->setFrameShadow(QFrame::Raised);
+
+        gridLayout_4->addWidget(label_repeat2, 2, 14, 2, 1);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_4->addItem(horizontalSpacer, 2, 15, 2, 1);
+
+        horizontalSpacer_4 = new QSpacerItem(10, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        gridLayout_4->addItem(horizontalSpacer_4, 1, 13, 1, 1);
+
+        sendButton2 = new QPushButton(centralWidget);
+        sendButton2->setObjectName(QString::fromUtf8("sendButton2"));
+
+        gridLayout_4->addWidget(sendButton2, 2, 8, 2, 1);
+
+        spinBox2 = new QSpinBox(centralWidget);
+        spinBox2->setObjectName(QString::fromUtf8("spinBox2"));
+        spinBox2->setMaximum(9999);
+
+        gridLayout_4->addWidget(spinBox2, 2, 11, 2, 1);
 
         spinBox = new QSpinBox(centralWidget);
         spinBox->setObjectName(QString::fromUtf8("spinBox"));
@@ -175,15 +236,26 @@ public:
 
         gridLayout_4->addWidget(spinBox, 1, 11, 1, 1);
 
-        plainTextEditField1 = new QPlainTextEdit(centralWidget);
-        plainTextEditField1->setObjectName(QString::fromUtf8("plainTextEditField1"));
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Minimum);
-        sizePolicy1.setHorizontalStretch(100);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(plainTextEditField1->sizePolicy().hasHeightForWidth());
-        plainTextEditField1->setSizePolicy(sizePolicy1);
+        checkBoxRepeat2 = new QCheckBox(centralWidget);
+        checkBoxRepeat2->setObjectName(QString::fromUtf8("checkBoxRepeat2"));
 
-        gridLayout_4->addWidget(plainTextEditField1, 1, 0, 1, 8);
+        gridLayout_4->addWidget(checkBoxRepeat2, 2, 10, 2, 1);
+
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_4->addItem(horizontalSpacer_3, 0, 2, 1, 14);
+
+        hexInConsoleCheckBox = new QCheckBox(centralWidget);
+        hexInConsoleCheckBox->setObjectName(QString::fromUtf8("hexInConsoleCheckBox"));
+        hexInConsoleCheckBox->setChecked(false);
+
+        gridLayout_4->addWidget(hexInConsoleCheckBox, 0, 0, 1, 1);
+
+        repeatCheckBox = new QCheckBox(centralWidget);
+        repeatCheckBox->setObjectName(QString::fromUtf8("repeatCheckBox"));
+        repeatCheckBox->setMinimumSize(QSize(74, 0));
+
+        gridLayout_4->addWidget(repeatCheckBox, 1, 10, 1, 1);
 
         repeat_label = new QLabel(centralWidget);
         repeat_label->setObjectName(QString::fromUtf8("repeat_label"));
@@ -196,77 +268,6 @@ public:
         repeat_label->setFrameShadow(QFrame::Raised);
 
         gridLayout_4->addWidget(repeat_label, 1, 14, 1, 1);
-
-        repeatCheckBox = new QCheckBox(centralWidget);
-        repeatCheckBox->setObjectName(QString::fromUtf8("repeatCheckBox"));
-
-        gridLayout_4->addWidget(repeatCheckBox, 1, 10, 1, 1);
-
-        label_ms = new QLabel(centralWidget);
-        label_ms->setObjectName(QString::fromUtf8("label_ms"));
-
-        gridLayout_4->addWidget(label_ms, 1, 12, 1, 1);
-
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-        gridLayout_4->addItem(horizontalSpacer_2, 1, 15, 1, 1);
-
-        hexInConsoleCheckBox = new QCheckBox(centralWidget);
-        hexInConsoleCheckBox->setObjectName(QString::fromUtf8("hexInConsoleCheckBox"));
-        hexInConsoleCheckBox->setChecked(false);
-
-        gridLayout_4->addWidget(hexInConsoleCheckBox, 0, 0, 1, 1);
-
-        label_repeat2 = new QLabel(centralWidget);
-        label_repeat2->setObjectName(QString::fromUtf8("label_repeat2"));
-        label_repeat2->setFrameShape(QFrame::Box);
-        label_repeat2->setFrameShadow(QFrame::Raised);
-
-        gridLayout_4->addWidget(label_repeat2, 2, 14, 2, 1);
-
-        sendButton2 = new QPushButton(centralWidget);
-        sendButton2->setObjectName(QString::fromUtf8("sendButton2"));
-
-        gridLayout_4->addWidget(sendButton2, 2, 8, 2, 1);
-
-        checkBoxHex2 = new QCheckBox(centralWidget);
-        checkBoxHex2->setObjectName(QString::fromUtf8("checkBoxHex2"));
-        checkBoxHex2->setChecked(true);
-
-        gridLayout_4->addWidget(checkBoxHex2, 2, 9, 2, 1);
-
-        checkBoxRepeat2 = new QCheckBox(centralWidget);
-        checkBoxRepeat2->setObjectName(QString::fromUtf8("checkBoxRepeat2"));
-
-        gridLayout_4->addWidget(checkBoxRepeat2, 2, 10, 2, 1);
-
-        spinBox2 = new QSpinBox(centralWidget);
-        spinBox2->setObjectName(QString::fromUtf8("spinBox2"));
-        spinBox2->setMaximum(9999);
-
-        gridLayout_4->addWidget(spinBox2, 2, 11, 2, 1);
-
-        label_ms2 = new QLabel(centralWidget);
-        label_ms2->setObjectName(QString::fromUtf8("label_ms2"));
-
-        gridLayout_4->addWidget(label_ms2, 2, 12, 2, 1);
-
-        horizontalSpacer_5 = new QSpacerItem(10, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
-
-        gridLayout_4->addItem(horizontalSpacer_5, 2, 13, 2, 1);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_4->addItem(horizontalSpacer, 2, 15, 2, 1);
-
-        timeCheckBox = new QCheckBox(centralWidget);
-        timeCheckBox->setObjectName(QString::fromUtf8("timeCheckBox"));
-
-        gridLayout_4->addWidget(timeCheckBox, 0, 1, 1, 1);
-
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_4->addItem(horizontalSpacer_3, 0, 2, 1, 14);
 
 
         gridLayout->addLayout(gridLayout_4, 1, 0, 1, 3);
@@ -287,8 +288,8 @@ public:
         gridLayout_5->setContentsMargins(-1, 0, -1, 0);
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        sizePolicy.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
-        lineEdit->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
+        lineEdit->setSizePolicy(sizePolicy1);
         lineEdit->setMinimumSize(QSize(600, 0));
 
         gridLayout_5->addWidget(lineEdit, 0, 1, 1, 4);
@@ -419,18 +420,18 @@ public:
 #if QT_CONFIG(shortcut)
         actionFastConnect->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+F", nullptr));
 #endif // QT_CONFIG(shortcut)
-        HexCheckBox->setText(QCoreApplication::translate("MainWindow", "Hex", nullptr));
-        sendButton->setText(QCoreApplication::translate("MainWindow", "Send", nullptr));
-        repeat_label->setText(QCoreApplication::translate("MainWindow", "Repeat off", nullptr));
-        repeatCheckBox->setText(QCoreApplication::translate("MainWindow", "Repeat", nullptr));
         label_ms->setText(QCoreApplication::translate("MainWindow", "ms", nullptr));
-        hexInConsoleCheckBox->setText(QCoreApplication::translate("MainWindow", "Hex", nullptr));
+        checkBoxHex2->setText(QCoreApplication::translate("MainWindow", "Hex", nullptr));
+        label_ms2->setText(QCoreApplication::translate("MainWindow", "ms", nullptr));
+        HexCheckBox->setText(QCoreApplication::translate("MainWindow", "Hex", nullptr));
+        timeCheckBox->setText(QCoreApplication::translate("MainWindow", "Time", nullptr));
+        sendButton->setText(QCoreApplication::translate("MainWindow", "Send", nullptr));
         label_repeat2->setText(QCoreApplication::translate("MainWindow", "Repeat off", nullptr));
         sendButton2->setText(QCoreApplication::translate("MainWindow", "Send", nullptr));
-        checkBoxHex2->setText(QCoreApplication::translate("MainWindow", "Hex", nullptr));
         checkBoxRepeat2->setText(QCoreApplication::translate("MainWindow", "Repeat", nullptr));
-        label_ms2->setText(QCoreApplication::translate("MainWindow", "ms", nullptr));
-        timeCheckBox->setText(QCoreApplication::translate("MainWindow", "Time", nullptr));
+        hexInConsoleCheckBox->setText(QCoreApplication::translate("MainWindow", "Hex", nullptr));
+        repeatCheckBox->setText(QCoreApplication::translate("MainWindow", "Repeat", nullptr));
+        repeat_label->setText(QCoreApplication::translate("MainWindow", "Repeat off", nullptr));
         lineEdit->setText(QString());
         lineEdit->setPlaceholderText(QCoreApplication::translate("MainWindow", "Input data to search + \"Enter\"", nullptr));
         caseSensCheckBox->setText(QCoreApplication::translate("MainWindow", "Case sensitive", nullptr));
