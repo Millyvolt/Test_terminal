@@ -69,6 +69,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_serial(new QSerialPort(this)),
     repeat_timer(new QTimer(this)),
     repeat_timer2(new QTimer(this)),
+    ledRx_timer(new QTimer(this)),
+    ledTx_timer(new QTimer(this)),
     cursor(new QTextCursor)
 {
     m_ui->setupUi(this);
@@ -115,10 +117,27 @@ MainWindow::MainWindow(QWidget *parent) :
 //    *cursor = m_ui->plainTextEditConsole->textCursor();
 //    m_ui->plainTextEditConsole->setTextCursor(*cursor);
 
+    m_ui->lineLedTx->setFixedHeight(10);
+    m_ui->lineLedTx->setFixedWidth(30);
+    m_ui->lineLedTx->setLineWidth(5);
+    m_ui->lineLedTx->setStyleSheet(QString("background-color: white;"));
+    //    m_ui->line->setFrameShadow(QFrame::Sunken);
+
+    m_ui->lineLedRx->setFixedHeight(10);
+    m_ui->lineLedRx->setFixedWidth(30);
+    m_ui->lineLedRx->setLineWidth(5);
+    m_ui->lineLedRx->setStyleSheet(QString("background-color: white;"));
+
+    ledRx_timer->setSingleShot(true);
+    ledTx_timer->setSingleShot(true);
+
     initActionsConnections();
 
     connect(repeat_timer, &QTimer::timeout, this, &MainWindow::Send_data);
     connect(repeat_timer2, &QTimer::timeout, this, &MainWindow::Send_data2);
+
+    connect(ledRx_timer, &QTimer::timeout, this, &MainWindow::LedRxOff);
+    connect(ledTx_timer, &QTimer::timeout, this, &MainWindow::LedTxOff);
 
     connect(m_serial, &QSerialPort::errorOccurred, this, &MainWindow::handleError);
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
@@ -196,6 +215,9 @@ void MainWindow::writeData(const QByteArray &data)
         QScrollBar *bar = m_ui->plainTextEditConsole->verticalScrollBar();
         bar->setValue(bar->maximum());
 
+        m_ui->lineLedTx->setStyleSheet(QString("background-color: orange;"));
+        ledTx_timer->start(LED_ON_DURATION_MS);
+
        // m_ui->plainTextEditConsole->insertPlainText("\n");
     }
     else
@@ -207,6 +229,9 @@ void MainWindow::readData()
     QByteArray data = m_serial->readAll();
 
     //    m_console->putData(data);
+
+    m_ui->lineLedRx->setStyleSheet(QString("background-color: green;"));
+    ledRx_timer->start(LED_ON_DURATION_MS);
 
     m_ui->plainTextEditConsole->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 
@@ -361,7 +386,15 @@ void MainWindow::Set_label_color(QLabel *label, Qt::GlobalColor color)
     label->setPalette(palette);
 }
 
+void MainWindow::LedRxOff()
+{
+    m_ui->lineLedRx->setStyleSheet(QString("background-color: white;"));
+}
 
+void MainWindow::LedTxOff()
+{
+    m_ui->lineLedTx->setStyleSheet(QString("background-color: white;"));
+}
 
 /*************************************************************************************************
 ************************ slots handlers generated from ui: ***************************************/

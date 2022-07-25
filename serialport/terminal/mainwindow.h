@@ -57,6 +57,10 @@
 #include <QTimer>
 #include <QTextCursor>
 
+
+#define LED_ON_DURATION_MS            100
+
+
 QT_BEGIN_NAMESPACE
 
 class QLabel;
@@ -128,6 +132,8 @@ private:
     void Send_data();
     void Send_data2();
     void Set_label_color(QLabel *label, Qt::GlobalColor color);
+    void LedRxOff();
+    void LedTxOff();
 
     Ui::MainWindow *m_ui = nullptr;
     QLabel *m_status = nullptr;
@@ -142,12 +148,16 @@ private:
     bool repeat_timer_on = false;
     bool repeat_timer_on2 = false;
     bool time_checkbox = false;
-    bool hex_console = true;
+    bool hex_console = false;
     bool start_search = true;
     bool capture_mode = false;
 
     QTimer *repeat_timer = nullptr;
     QTimer *repeat_timer2 = nullptr;
+
+    //timers for leds TX Rx
+    QTimer *ledRx_timer = nullptr;
+    QTimer *ledTx_timer = nullptr;
 
     QTextCursor *cursor = nullptr;
 };
