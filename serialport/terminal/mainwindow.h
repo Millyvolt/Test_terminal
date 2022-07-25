@@ -121,6 +121,7 @@ private slots:
 
     void on_checkBoxCapture_stateChanged(int arg1);
 
+
 private:
     void initActionsConnections();
 
@@ -141,8 +142,8 @@ private:
     SettingsDialog *m_settings = nullptr;
     QSerialPort *m_serial = nullptr;
 
-    bool hex_checkbox = true;
-    bool hex_checkbox2 = true;
+    bool hex_checkbox = false;
+    bool hex_checkbox2 = false;
     bool repeat_checkbox = false;
     bool repeat_checkbox2 = false;
     bool repeat_timer_on = false;

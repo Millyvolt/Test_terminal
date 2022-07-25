@@ -29,7 +29,14 @@
       </item>
       <item row="1" column="0" colspan="3">
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="1" column="17">
+        <item row="2" column="0" colspan="7">
+         <widget class="QLineEdit" name="lineEditTxData_2">
+          <property name="placeholderText">
+           <string>Input data 2 to send + &quot;Enter&quot;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="14">
          <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -45,21 +52,21 @@
           </property>
          </spacer>
         </item>
-        <item row="2" column="10" rowspan="2">
+        <item row="2" column="7" rowspan="2">
          <widget class="QPushButton" name="sendButton2">
           <property name="text">
            <string>Send</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="13" rowspan="2">
+        <item row="2" column="10" rowspan="2">
          <widget class="QSpinBox" name="spinBox2">
           <property name="maximum">
            <number>9999</number>
           </property>
          </widget>
         </item>
-        <item row="1" column="12">
+        <item row="1" column="9">
          <widget class="QCheckBox" name="repeatCheckBox">
           <property name="minimumSize">
            <size>
@@ -72,24 +79,7 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QCheckBox" name="timeCheckBox">
-          <property name="text">
-           <string>Time</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" rowspan="2" colspan="10">
-         <widget class="QPlainTextEdit" name="plainTextEditField2">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>100</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="15">
+        <item row="1" column="12">
          <spacer name="horizontalSpacer_4">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -105,7 +95,7 @@
           </property>
          </spacer>
         </item>
-        <item row="2" column="16" rowspan="2">
+        <item row="2" column="13" rowspan="2">
          <widget class="QLabel" name="label_repeat2">
           <property name="frameShape">
            <enum>QFrame::Box</enum>
@@ -118,17 +108,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0" colspan="10">
-         <widget class="QPlainTextEdit" name="plainTextEditField1">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-            <horstretch>100</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="15" rowspan="2">
+        <item row="2" column="12" rowspan="2">
          <spacer name="horizontalSpacer_5">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -144,14 +124,14 @@
           </property>
          </spacer>
         </item>
-        <item row="2" column="14" rowspan="2">
+        <item row="2" column="11" rowspan="2">
          <widget class="QLabel" name="label_ms2">
           <property name="text">
            <string>ms</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="4" colspan="14">
+        <item row="0" column="4" colspan="11">
          <spacer name="horizontalSpacer_3">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -164,30 +144,44 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="11">
+        <item row="1" column="8">
          <widget class="QCheckBox" name="HexCheckBox">
           <property name="text">
            <string>Hex</string>
           </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
         </item>
-        <item row="2" column="12" rowspan="2">
+        <item row="2" column="9" rowspan="2">
          <widget class="QCheckBox" name="checkBoxRepeat2">
           <property name="text">
            <string>Repeat</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="11" rowspan="2">
+        <item row="2" column="8" rowspan="2">
          <widget class="QCheckBox" name="checkBoxHex2">
           <property name="text">
            <string>Hex</string>
           </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QCheckBox" name="timeCheckBox">
+          <property name="text">
+           <string>Time</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="Line" name="lineLedTx">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
@@ -201,7 +195,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="16">
+        <item row="1" column="13">
          <widget class="QLabel" name="repeat_label">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -220,14 +214,14 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="14">
+        <item row="1" column="11">
          <widget class="QLabel" name="label_ms">
           <property name="text">
            <string>ms</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="13">
+        <item row="1" column="10">
          <widget class="QSpinBox" name="spinBox">
           <property name="layoutDirection">
            <enum>Qt::LeftToRight</enum>
@@ -240,14 +234,14 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="10">
+        <item row="1" column="7">
          <widget class="QPushButton" name="sendButton">
           <property name="text">
            <string>Send</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="17" rowspan="2">
+        <item row="2" column="14" rowspan="2">
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -267,10 +261,10 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="2">
-         <widget class="Line" name="lineLedTx">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+        <item row="1" column="0" colspan="7">
+         <widget class="QLineEdit" name="lineEditTxData_1">
+          <property name="placeholderText">
+           <string>Input data 1 to send + &quot;Enter&quot;</string>
           </property>
          </widget>
         </item>

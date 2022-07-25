@@ -79,15 +79,12 @@ MainWindow::MainWindow(QWidget *parent) :
 //    setCentralWidget(m_console);
 //    m_ui->verticalLayout_2->addWidget(m_console);
 
-    //my console setting up
 
     QPalette *text3_pal = new QPalette;
     text3_pal->setColor(QPalette::Base, Qt::black);
     text3_pal->setColor(QPalette::Text, Qt::green);
     m_ui->plainTextEditConsole->setPalette(*text3_pal);
 
-//    m_ui->gridLayout->addWidget(m_ui->plainTextEdit_3);
-//    m_ui->gridLayout->addWidget(m_ui->hexInConsoleCheckBox);
 
     m_ui->actionConnect->setEnabled(true);
     m_ui->actionDisconnect->setEnabled(false);
@@ -98,21 +95,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_ui->statusBar->addWidget(m_status);
 
-    m_ui->plainTextEditField1->setPlaceholderText("Input data to send 1");
-    m_ui->plainTextEditField2->setPlaceholderText("Input data to send 2");
-//    m_ui->plainTextEditField1->setPlainText("55AA496AD500000000000000000000000000000000000000000000000000"
-//                                      "000000703A11FA4000000000F0390F00000000000000000070D31467ABA5"
-//                                      "001BF8FFFFFF0700580055580A00D84BC30D");
-
     //set sizes of text fields
 //    m_console->setMinimumSize(650, 200);
 //    m_console->setMaximumSize(10000, 1000);
     m_ui->plainTextEditConsole->setMinimumSize(650, 400);
     m_ui->plainTextEditConsole->setMaximumSize(10000, 1000);
-    m_ui->plainTextEditField2->setMinimumSize(700, 26);
-    m_ui->plainTextEditField2->setMaximumSize(10000, 26);
-    m_ui->plainTextEditField1->setMinimumSize(700, 26);
-    m_ui->plainTextEditField1->setMaximumSize(10000, 26);
+    m_ui->lineEditTxData_1->setMinimumSize(700, 26);
+    m_ui->lineEditTxData_1->setMaximumSize(10000, 26);
+    m_ui->lineEditTxData_2->setMinimumSize(700, 26);
+    m_ui->lineEditTxData_2->setMaximumSize(10000, 26);
 
 //    *cursor = m_ui->plainTextEditConsole->textCursor();
 //    m_ui->plainTextEditConsole->setTextCursor(*cursor);
@@ -142,6 +133,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_serial, &QSerialPort::errorOccurred, this, &MainWindow::handleError);
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
     connect(m_console, &Console::getData, this, &MainWindow::writeData);
+
+    connect(m_ui->lineEditTxData_1, &QLineEdit::returnPressed, this, &MainWindow::on_sendButton_clicked);
+    connect(m_ui->lineEditTxData_2, &QLineEdit::returnPressed, this, &MainWindow::on_sendButton2_clicked);
 }
 
 MainWindow::~MainWindow()
@@ -189,9 +183,7 @@ void MainWindow::closeSerialPort()
 void MainWindow::about()
 {
     QMessageBox::about(this, tr("About Test Terminal"),
-                       tr("The <b>Test Terminal</b> using for "
-                          "testing properties."
-                           " All rights reserved! Bch"));
+                       tr("Terminal <b>v1.0</b> All rights reserved! Bch"));
 }
 
 void MainWindow::writeData(const QByteArray &data)
@@ -310,7 +302,7 @@ void MainWindow::Send_data()
 {
     if (m_serial->isOpen())
     {
-        QString string_tmp =  m_ui->plainTextEditField1->toPlainText();
+        QString string_tmp =  m_ui->lineEditTxData_1->text();
         QByteArray arr_tmp = string_tmp.toLocal8Bit();
 
         if(hex_checkbox)
@@ -346,7 +338,7 @@ void MainWindow::Send_data2()
 {
     if (m_serial->isOpen())
     {
-        QString string_tmp =  m_ui->plainTextEditField2->toPlainText();
+        QString string_tmp =  m_ui->lineEditTxData_2->text();
         QByteArray arr_tmp = string_tmp.toLocal8Bit();
 
         if(hex_checkbox2)
@@ -395,6 +387,7 @@ void MainWindow::LedTxOff()
 {
     m_ui->lineLedTx->setStyleSheet(QString("background-color: white;"));
 }
+
 
 /*************************************************************************************************
 ************************ slots handlers generated from ui: ***************************************/
@@ -622,3 +615,6 @@ void MainWindow::on_checkBoxCapture_stateChanged(int arg1)
     else
         capture_mode = false;
 }
+
+
+
