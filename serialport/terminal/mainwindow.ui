@@ -22,8 +22,11 @@
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0" colspan="3">
        <widget class="QPlainTextEdit" name="plainTextEditConsole">
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
         <property name="textInteractionFlags">
-         <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+         <set>Qt::TextEditorInteraction</set>
         </property>
        </widget>
       </item>
@@ -407,8 +410,10 @@
    <addaction name="actionConnect"/>
    <addaction name="actionDisconnect"/>
    <addaction name="actionConfigure"/>
+   <addaction name="separator"/>
    <addaction name="actionClear"/>
    <addaction name="actionFastConnect"/>
+   <addaction name="actionPackets"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
@@ -450,7 +455,7 @@
     <string>Connect to serial port</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+O</string>
+    <string>Ctrl+1</string>
    </property>
   </action>
   <action name="actionDisconnect">
@@ -465,7 +470,7 @@
     <string>Disconnect from serial port</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+D</string>
+    <string>Ctrl+2</string>
    </property>
   </action>
   <action name="actionConfigure">
@@ -480,7 +485,7 @@
     <string>Configure serial port</string>
    </property>
    <property name="shortcut">
-    <string>Alt+C</string>
+    <string>Ctrl+3</string>
    </property>
   </action>
   <action name="actionClear">
@@ -495,7 +500,7 @@
     <string>Clear data</string>
    </property>
    <property name="shortcut">
-    <string>Alt+L</string>
+    <string>Ctrl+4</string>
    </property>
   </action>
   <action name="actionQuit">
@@ -522,7 +527,18 @@
     <string>Preconfigured connect</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+F</string>
+    <string>Ctrl+5</string>
+   </property>
+  </action>
+  <action name="actionPackets">
+   <property name="text">
+    <string>Packets</string>
+   </property>
+   <property name="toolTip">
+    <string>Кастомные пакеты данных</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+6</string>
    </property>
   </action>
  </widget>

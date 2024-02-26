@@ -53,6 +53,7 @@
 #include "ui_mainwindow.h"
 #include "console.h"
 #include "settingsdialog.h"
+#include "packets.h"
 
 #include <QLabel>
 #include <QMessageBox>
@@ -67,6 +68,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_console(new Console),
     m_settings(new SettingsDialog),
     m_serial(new QSerialPort(this)),
+    ppackets(new Packets),
     repeat_timer(new QTimer(this)),
     repeat_timer2(new QTimer(this)),
     ledRx_timer(new QTimer(this)),
@@ -124,6 +126,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     initActionsConnections();
 
+
+//    m_console->setEnabled(false);
+//    m_console->setReadOnly(true);
+
+
     connect(repeat_timer, &QTimer::timeout, this, &MainWindow::Send_data);
     connect(repeat_timer2, &QTimer::timeout, this, &MainWindow::Send_data2);
 
@@ -155,6 +162,7 @@ void MainWindow::openSerialPort()
     m_serial->setFlowControl(p.flowControl);
     if (m_serial->open(QIODevice::ReadWrite)) {
         m_console->setEnabled(true);
+//        m_console->setTextInteractionFlags(Qt::TextEditorInteraction);
 //        m_console->setLocalEchoEnabled(p.localEchoEnabled);
         m_ui->actionConnect->setEnabled(false);
         m_ui->actionDisconnect->setEnabled(true);
@@ -616,5 +624,8 @@ void MainWindow::on_checkBoxCapture_stateChanged(int arg1)
         capture_mode = false;
 }
 
-
+void MainWindow::on_actionPackets_triggered()
+{
+    ppackets->show();
+}
 

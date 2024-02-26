@@ -73,6 +73,7 @@ QT_END_NAMESPACE
 
 class Console;
 class SettingsDialog;
+class Packets;
 
 class MainWindow : public QMainWindow
 {
@@ -122,6 +123,8 @@ private slots:
     void on_checkBoxCapture_stateChanged(int arg1);
 
 
+    void on_actionPackets_triggered();
+
 private:
     void initActionsConnections();
 
@@ -141,6 +144,7 @@ private:
     Console *m_console = nullptr;
     SettingsDialog *m_settings = nullptr;
     QSerialPort *m_serial = nullptr;
+    Packets * ppackets{nullptr};
 
     bool hex_checkbox = false;
     bool hex_checkbox2 = false;

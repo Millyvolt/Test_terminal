@@ -62,7 +62,12 @@ Console::Console(QWidget *parent) :
     p.setColor(QPalette::Base, Qt::black);
     p.setColor(QPalette::Text, Qt::green);
     setPalette(p);
-    setTextInteractionFlags(Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse);
+//    setTextInteractionFlags(Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse);
+//    setTextInteractionFlags(Qt::TextEditable);
+//    setTextInteractionFlags(Qt::TextEditorInteraction);
+//    setReadOnly(true);
+
+//    setEnabled(false);
 }
 
 void Console::putData(const QByteArray &data)
