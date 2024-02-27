@@ -143,6 +143,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(m_ui->lineEditTxData_1, &QLineEdit::returnPressed, this, &MainWindow::on_sendButton_clicked);
     connect(m_ui->lineEditTxData_2, &QLineEdit::returnPressed, this, &MainWindow::on_sendButton2_clicked);
+
+    connect(ppackets, &Packets::send_packet, this, &MainWindow::writeDataPackets);
 }
 
 MainWindow::~MainWindow()
@@ -219,6 +221,36 @@ void MainWindow::writeData(const QByteArray &data)
         ledTx_timer->start(LED_ON_DURATION_MS);
 
        // m_ui->plainTextEditConsole->insertPlainText("\n");
+    }
+    else
+        QMessageBox::information(this, tr("Info"), tr("Com port is not open"));
+}
+
+void MainWindow::writeDataPackets(const QByteArray &data)
+{
+    if (m_serial->isOpen())
+    {
+        m_ui->plainTextEditConsole->insertPlainText("\n<<<<");
+
+         QByteArray ba1;
+
+
+        for(int i=0; i < data.size() - 1; i++){
+            auto start = std::chrono::high_resolution_clock::now();
+            long long microseconds{0};
+//            QByteArray ba1{1, data[i]};
+
+            ba1.clear();
+            ba1.append(data[i]);
+
+            while(microseconds < pause_us){
+                auto elapsed = std::chrono::high_resolution_clock::now() - start;
+                microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
+            }
+
+            m_serial->write(ba1);
+        }
+
     }
     else
         QMessageBox::information(this, tr("Info"), tr("Com port is not open"));

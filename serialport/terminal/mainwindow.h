@@ -83,6 +83,9 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void writeDataPackets(const QByteArray &data);
+
 private slots:
     void openSerialPort();
     void closeSerialPort();
@@ -165,6 +168,8 @@ private:
     QTimer *ledTx_timer = nullptr;
 
     QTextCursor *cursor = nullptr;
+
+    int pause_us{100};
 };
 
 #endif // MAINWINDOW_H

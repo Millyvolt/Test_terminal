@@ -21,3 +21,24 @@ Packets::~Packets()
 {
     delete ui;
 }
+
+
+
+
+
+
+
+void Packets::on_spinBoxUsBetweenBytes_valueChanged(int arg1)
+{
+
+}
+
+void Packets::on_pushButtonSend_clicked()
+{
+    packet_to_send.clear();
+
+    for(int i=0; i < 10; i++)
+        packet_to_send.append(i + 10);
+
+    emit send_packet(packet_to_send);
+}
